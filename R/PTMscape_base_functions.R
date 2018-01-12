@@ -287,10 +287,6 @@ get_all_candidate_no_positive = function(cand_site, flank_size, sp_seq, sp_uni_i
 
 
 
-### Build decoy set from the non-candidate set
-### focus on the sites which are not candidate sites
-### decoys are from these sites
-
 
 
 # away_center_size < flank_size
