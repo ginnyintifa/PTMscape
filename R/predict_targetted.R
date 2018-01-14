@@ -33,7 +33,7 @@ generate_feature_t = function(ptm_site, flanking_size=12,
                                      output_label_training, output_label_predict)
 {
   ### get aaindex feature data
-  aaindex_cluster_order = fread("aaindex_cluster_order.tsv", stringsAsFactors = F)
+  aaindex_cluster_order = data.table::fread("aaindex_cluster_order.tsv", stringsAsFactors = F)
   aais = aaindex_cluster_order$cluster_name
   
   
@@ -58,7 +58,7 @@ generate_feature_t = function(ptm_site, flanking_size=12,
   ### find the intersection of user provided protein sequences and the spider info 
   #### protein_fasta_file = "S_sp_fasta.tsv"
   
-  spider_protID = fread("spider_protID.tsv", stringsAsFactors = F)
+  spider_protID = data.table::fread("spider_protID.tsv", stringsAsFactors = F)
   
   
   #####
@@ -90,7 +90,7 @@ generate_feature_t = function(ptm_site, flanking_size=12,
   
   ### positive PTM sites from PSP
   #### positive_info_file = "ps_PSP.tsv"
-  ps_info = fread(positive_info_file, stringsAsFactors = F)
+  ps_info = data.table::fread(positive_info_file, stringsAsFactors = F)
   
   
   ##############################################################################################

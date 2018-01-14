@@ -7,7 +7,7 @@
 #' @param positive_info_file A text file containing the positive PTM sites info in required format.
 #' @param protein_fasta_file A fext file containing the proteins sequences of interest in Fasta format.
 #' @param output_label The string to tag the output files.
-#' @import stringr pryr dplyr magrittr
+#' @import stringr pryr dplyr magrittr 
 #' @export
 #' @details This function outputs the features generated from input files.
 #' @examples 
@@ -22,7 +22,7 @@ generate_feature_wp = function(ptm_site, flanking_size=12,
                             output_label)
 {
   ### get aaindex feature data
-  aaindex_cluster_order = fread("aaindex_cluster_order.tsv", stringsAsFactors = F)
+  aaindex_cluster_order = data.table::fread("aaindex_cluster_order.tsv", stringsAsFactors = F)
   aais = aaindex_cluster_order$cluster_name
   
   
@@ -51,7 +51,7 @@ generate_feature_wp = function(ptm_site, flanking_size=12,
   sp_seq = all_sp[c(F,T)]
   sp_uni_id = sapply(1:length(sp_id),function(i) strsplit(sp_id[i], split = "|", fixed = T)[[1]][2])
   
-  spider_protID = fread("spider_protID.tsv", stringsAsFactors = F)
+  spider_protID = data.table::fread("spider_protID.tsv", stringsAsFactors = F)
   
   not_na_id = intersect(sp_uni_id, spider_protID$x)
   which_sel = which(sp_uni_id%in%not_na_id)
@@ -63,7 +63,7 @@ generate_feature_wp = function(ptm_site, flanking_size=12,
   
   ### positive PTM sites from PSP
   #### positive_info_file = "ps_PSP.tsv"
-  ps_info = fread(positive_info_file, stringsAsFactors = F)
+  ps_info = data.table::fread(positive_info_file, stringsAsFactors = F)
   
   
   ##############################################################################################
