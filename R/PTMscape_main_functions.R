@@ -483,6 +483,11 @@ construct_n_fold_cv_without_decoy = function(pos_candi_feature_matrix_Rds_name,p
                                              n, output_label)
 {
   
+  # pos_candi_feature_matrix_Rds_name = "glcnac_s_wp_feature_matrix.Rds"
+  # pos_candi_feature_label_Rds_name = "glcnac_s_wp_feature_label.Rds"
+  # n = 2
+  # output_label = "tg"
+  # 
   pos_candi_feature_matrix = readRDS(pos_candi_feature_matrix_Rds_name)
   pos_candi_feature_label = readRDS(pos_candi_feature_label_Rds_name)
   
@@ -514,7 +519,7 @@ construct_n_fold_cv_without_decoy = function(pos_candi_feature_matrix_Rds_name,p
   
   for(i in 1:n)
   {
-    
+
     test_pos_ind = which(pos_folds==i)
     test_candi_ind = which(candi_folds==i)
     
