@@ -30,7 +30,7 @@ This function generates feature data for targeted by mapping the positive PTM in
 This function outputs the features generated from input files.
 }
 \examples{
-g_feature_t(ptm_site = "S",
+generate_feature_t(ptm_site = "S",
             flanking_size = 12,
             positive_info_file = "known_ps.tsv",
             known_protein_fasta_file = "known_fasta.tsv",

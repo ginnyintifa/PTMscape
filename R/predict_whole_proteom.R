@@ -11,13 +11,13 @@
 #' @export
 #' @details This function outputs the features generated from input files.
 #' @examples 
-#' g_feature_wp(ptm_site = "S",
+#' generate_feature_wp(ptm_site = "S",
 #'              flanking_size = 12,
 #'              positive_info_file = "ps_PSP.tsv",
 #'              protein_fasta_file = "S_sp_fasta.tsv",
 #'              output_label = "ps_0103")
 
-g_feature_wp = function(ptm_site, flanking_size=12, 
+generate_feature_wp = function(ptm_site, flanking_size=12, 
                             positive_info_file, protein_fasta_file,
                             output_label)
 {
@@ -124,14 +124,14 @@ g_feature_wp = function(ptm_site, flanking_size=12,
 #' @export
 #' @details This function outputs formatted feature files ready for Liblinear training and prediction.
 #' @examples 
-#' g_training_test_data_wp(n_fold = 2,
+#' generate_training_test_data_wp(n_fold = 2,
 #'                         lower_bound = -1,
 #'                         upper_bound = 1,
 #'                         positive_feature_file = "ps_0103_noc_not_na_pos_feature.Rds",
 #'                         negative_feature_file = "ps_0103_noc_not_na_candi_feature.Rds",
 #'                         output_label = "ps_0103")
 
-g_training_test_data_wp = function(n_fold = 2, 
+generate_training_test_data_wp = function(n_fold = 2, 
                                    lower_bound = -1, 
                                    upper_bound = 1,
                                    positive_feature_file,
@@ -308,7 +308,7 @@ process_n_fold_cross_validation = function(liblinear_dir,
 #' @import stringr pryr dplyr magrittr 
 #' @export
 #' @examples 
-#' present_prediction_whole_proteome(positive_index_file_names = "ps_0103_pos_index_names.Rds",
+#' present_prediction_wp(positive_index_file_names = "ps_0103_pos_index_names.Rds",
 #'                                  candi_index_file_names = "ps_0103_candi_index_names.Rds",
 #'                                  prediction_score_file_names = "ps_0103_prediction_file_names.Rds",
 #'                                  test_label_file_names = "ps_0103_test_label_names.Rds",
@@ -390,14 +390,14 @@ predict_on_whole_proteome = function(ptm_site,
                                      output_label)
 {
   
-  generate_feature_whole_proteome(ptm_site = ptm_site,
+  generate_feature_wp(ptm_site = ptm_site,
                                   flanking_size = flanking_size,
                                   positive_info_file = positive_info_file,
                                   protein_fasta_file = protein_fasta_file,
                                   output_label = output_label)
   cat("STEP1: Feature generated.", "\n")
   
-  generate_training_test_data_whole_proteome(n_fold = n_fold, 
+  generate_training_test_data_wp(n_fold = n_fold, 
                                              lower_bound = lower_bound,
                                              upper_bound = upper_bound,
                                              positive_feature_file = paste0(output_label,
@@ -421,7 +421,7 @@ predict_on_whole_proteome = function(ptm_site,
   cat("STEP3: Liblinear processed.", "\n")
   
   
-  present_prediction_whole_proteome(positive_index_file_names = paste0(output_label,"_pos_index_names.Rds"),
+  present_prediction_wp(positive_index_file_names = paste0(output_label,"_pos_index_names.Rds"),
                                     candi_index_file_names = paste0(output_label,"_candi_index_names.Rds"),
                                     prediction_score_file_names = paste0(output_label,"_prediction_file_names.Rds"),
                                     test_label_file_names = paste0(output_label, "_test_label_names.Rds"),

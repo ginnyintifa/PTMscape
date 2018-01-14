@@ -18,7 +18,7 @@
 #' @export
 #' @details This function outputs the features generated from input files.
 #' @examples 
-#' g_feature_t(ptm_site = "S",
+#' generate_feature_t(ptm_site = "S",
 #'             flanking_size = 12,
 #'             positive_info_file = "known_ps.tsv",
 #'             known_protein_fasta_file = "known_fasta.tsv",
@@ -193,15 +193,14 @@ generate_feature_t = function(ptm_site, flanking_size=12,
 #' @details This function outputs formatted feature files ready for Liblinear training and prediction.
 #' @examples 
 #' 
-#' generate_feature_targeted(ptm_site = "S",
-#'                          flanking_size=12, 
-#'                          positive_info_file = "known_ps.tsv", 
-#'                          known_protein_fasta_file = "known_fasta.tsv",
-#'                          predict_protein_fasta_file = "predict_fasta.tsv",
-#'                          output_label_training = "ps_training",
-#'                          output_label_predict = "ps_predict")
+#' generate_training_test_data_t(lower_bound = -1, upper_bound = 1,
+#'positive_training_feature_file ="ps_training_noc_not_na_pos_feature.Rds",
+#'negative_training_feature_file = "ps_training_noc_not_na_candi_feature.Rds",
+#'negative_predict_feature_file = "ps_predict_noc_not_na_candi_feature.Rds",
+#'output_label_training = "ps_training",
+#'output_label_predict = "ps_predict")
 
-g_training_test_data_t = function(lower_bound = -1, upper_bound = 1,
+generate_training_test_data_t = function(lower_bound = -1, upper_bound = 1,
                                                 positive_training_feature_file, negative_training_feature_file,
                                                 negative_predict_feature_file,
                                                 output_label_training, output_label_predict)
@@ -342,7 +341,7 @@ predict_with_liblinear = function(liblinear_dir,
 #' @import stringr pryr dplyr magrittr qvalue
 #' @export
 #' @examples 
-#' present_prediction_targeted(flag_for_score_threshold_chosen = "cv",
+#' present_prediction_t(flag_for_score_threshold_chosen = "cv",
 #'                            score_threshold = NULL,
 #'                            ptm_site = "S", flanking_size = 12,
 #'                            pred_candidate_df_Rds_name = "ps_predict_candidate.Rds",
@@ -359,7 +358,7 @@ predict_with_liblinear = function(liblinear_dir,
 #'                            specificity_level = 0.99,
 #'                            output_label = "ps_target")
 
-present_prediction_targeted = function(flag_for_score_threshold_chosen = "reference",
+present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
                                        score_threshold,
                                        ptm_site, flanking_size = 12,
                                        pred_candidate_df_Rds_name,
@@ -496,7 +495,7 @@ predict_on_targeted_proteome = function (ptm_site, flanking_size=12,
   
   cat("STEP1: Feature generated.", "\n")                   
   
-  g_training_test_data_t(lower_bound = lower_bound,
+  generate_training_test_data_t(lower_bound = lower_bound,
                          upper_bound = upper_bound,
                          positive_training_feature_file = paste0(output_label_training,"_noc_not_na_pos_feature.Rds"), 
                          negative_training_feature_file = paste0(output_label_training,"_noc_not_na_candi_feature.Rds"),
@@ -516,7 +515,7 @@ predict_on_targeted_proteome = function (ptm_site, flanking_size=12,
   cat("STEP3: Liblinear processed.", "\n")
   
   
-  present_prediction_targeted(flag_for_score_threshold_chosen = flag_for_score_threshold_chosen,
+  present_prediction_t(flag_for_score_threshold_chosen = flag_for_score_threshold_chosen,
                               score_threshold = score_threshold,
                               ptm_site = ptm_site, 
                               flanking_size = flanking_size,

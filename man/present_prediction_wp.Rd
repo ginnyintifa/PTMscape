@@ -27,7 +27,7 @@ present_prediction_wp(positive_index_file_names, candi_index_file_names,
 Combine Liblinear prediction results and window, position informations of sites. Calculate score threshold at user specified sensitivity level.
 }
 \examples{
-present_prediction_whole_proteome(positive_index_file_names = "ps_0103_pos_index_names.Rds",
+present_prediction_wp(positive_index_file_names = "ps_0103_pos_index_names.Rds",
                                  candi_index_file_names = "ps_0103_candi_index_names.Rds",
                                  prediction_score_file_names = "ps_0103_prediction_file_names.Rds",
                                  test_label_file_names = "ps_0103_test_label_names.Rds",
