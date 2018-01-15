@@ -314,6 +314,13 @@ calculate_tbt_negative_ptms = function(anchor_mod,
                                        output_label)
 {
   
+  
+  # anchor_mod = "ubi"
+  # cross_mod = "methy_k"
+  # anchor_mapped_df_Rds = "ubi_wp_52_mapped_df.Rds"
+  # cross_mapped_df_Rds = "methy_k_80_mapped_df.Rds"
+  # output_label = "ubi_methy_k_negtive"
+  # 
   anchor_mapped_df = readRDS(anchor_mapped_df_Rds)
   cross_mapped_df = readRDS(cross_mapped_df_Rds)
 
@@ -378,7 +385,7 @@ calculate_tbt_negative_ptms = function(anchor_mod,
     
     ### each domain may be involved in different proteins
     
-    if(nrow(this_domain_df)>0 )
+    if(nrow(this_domain_anchor_df)>0 )
     {
       
       anchor_match_label = this_domain_anchor_df$anchor_label
