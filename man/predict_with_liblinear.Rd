@@ -8,7 +8,7 @@ predict_with_liblinear(liblinear_dir, feature_file_path, training_file_name,
   test_file_name, output_label, cvlog_path_name)
 }
 \arguments{
-\item{liblinear_dir}{Absolute peth of Liblinear tool.}
+\item{liblinear_dir}{Absolute path of Liblinear tool.}
 
 \item{feature_file_path}{Absolute path of the feature files.}
 

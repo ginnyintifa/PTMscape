@@ -1979,7 +1979,7 @@ calculate_tbt_single_ptm = function(mapped_window_score_label_Rds,
   
   domain_list = unique(mapped_window_score_label$domain)
   domain_list = domain_list[!is.na(domain_list)]
-  domain_list = unique( unlist(strsplit(domain_list, split = " ")))
+  domain_list = unique(unlist(strsplit(domain_list, split = " ")))
   
   output_df = data.frame(domain = domain_list, a = 0, b=0, c=0, d=0)
   
@@ -1989,12 +1989,6 @@ calculate_tbt_single_ptm = function(mapped_window_score_label_Rds,
                               protIDs = character(length(domain_list)),
                               stringsAsFactors = F)
   
-  
-  
-  
-  saveRDS(domain_prot_df, file = paste0(output_label, "_domain_prot_match.Rds"))
-  write.table(domain_prot_df, paste0(output_label, "_domain_prot_match.tsv"), sep = "\t",
-              quote = F, row.names = F)
   
   
   
@@ -2036,6 +2030,12 @@ calculate_tbt_single_ptm = function(mapped_window_score_label_Rds,
     
     
   }
+  
+  
+  
+  saveRDS(domain_prot_df, file = paste0(output_label, "_domain_prot_match.Rds"))
+  write.table(domain_prot_df, paste0(output_label, "_domain_prot_match.tsv"), sep = "\t",
+              quote = F, row.names = F)
   
   
   

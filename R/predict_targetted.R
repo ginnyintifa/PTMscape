@@ -242,7 +242,7 @@ generate_training_test_data_t = function(lower_bound = -1, upper_bound = 1,
 #' Process prediction with Liblinear 
 #'
 #' Process the feature files with Liblinear training and prediction. Train on known proteins and predict on unknown proteins
-#' @param liblinear_dir Absolute peth of Liblinear tool.
+#' @param liblinear_dir Absolute path of Liblinear tool.
 #' @param feature_file_path Absolute path of the feature files.
 #' @param training_file_name A string indicating file name of the training feature data.
 #' @param test_file_name A string indicating the file name of the test feature data.
@@ -329,7 +329,7 @@ predict_with_liblinear = function(liblinear_dir,
 #' @param known_protein_fasta_file A fext file containing the proteins sequences of interest and known PTM sites in Fasta format.
 #' @param pred_candidate_df_Rds_name An Rds file containing the candidate data frame of the proteins to be predicted.
 #' @param pred_score_file_name     A text file containing the predicted score for the proteins of interest.   
-#' @param liblinear_dir Absolute peth of Liblinear tool.
+#' @param liblinear_dir Absolute path of Liblinear tool.
 #' @param n_fold Number of folds used for training and prediction, default set to 2
 #' @param feature_file_path Absolute path of the feature files.
 #' @param lower_bound the lower bound of the scaled data range, default to -1.
@@ -439,7 +439,7 @@ present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
 #' @param predict_protein_fasta_file A fext file containing the proteins sequences with PTM sites to be predicted in Fasta format.
 #' @param output_label_training The string to tag the output files associated with training proteins.
 #' @param output_label_predict The string to tag the output files associated with prediction proteins.
-#' @param liblinear_dir Absolute peth of Liblinear tool.
+#' @param liblinear_dir Absolute path of Liblinear tool.
 #' @param n_fold Number of folds used for training and prediction, default set to 2
 #' @param feature_file_path Absolute path of the feature files.
 #' @param lower_bound the lower bound of the scaled data range, default to -1.

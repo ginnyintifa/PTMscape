@@ -29,7 +29,7 @@ predict_on_targeted_proteome(ptm_site, flanking_size = 12, positive_info_file,
 
 \item{upper_bound}{the upper bound of the scaled data range, default to 1.}
 
-\item{liblinear_dir}{Absolute peth of Liblinear tool.}
+\item{liblinear_dir}{Absolute path of Liblinear tool.}
 
 \item{feature_file_path}{Absolute path of the feature files.}
 
