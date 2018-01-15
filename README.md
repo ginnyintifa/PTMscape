@@ -1,6 +1,6 @@
-# PTMscape
+# PTMscape user guide
 
-# to download and install
+# Download and install
 
 ```
 install.packages("devtools")
@@ -13,7 +13,7 @@ library(PTMscape)
 
 
 
-#Package and library dependency
+# Package and library dependency
 
 PTMscape requires installation of the following R packages
 ```{r, eval = F}
