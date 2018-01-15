@@ -22,9 +22,9 @@ calculate_tbt_negative_ptms(anchor_mod, cross_mod, anchor_mapped_df_Rds,
 Test for enrichment of two user provided PTM types inside of domains.
 }
 \examples{
-calculate_tbt_negative_ptms(anchor_mode = "ps",
-                            cross_mod = "pt",
-                            anchor_mapped_df_Rds = "ps_0103_mapped_df.Rds",
-                            cross_mapped_df_Rds = "pt_0103_mapped_df.Rds",
-                            output_label = "pt_ps_positive")
+calculate_tbt_negative_ptms(anchor_mod = "ubi",
+                            cross_mod = "acety",
+                            anchor_mapped_df_Rds = "ubi_0103_mapped_df.Rds",
+                            cross_mapped_df_Rds = "acety_0103_mapped_df.Rds",
+                            output_label = "ubi_acety_negtive")
 }

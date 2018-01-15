@@ -25,7 +25,7 @@ Test for enrichment of two user provided PTM types inside of domains.
 }
 \examples{
 calculate_tbt_positive_ptms(distance = 5,
-                       anchor_mode = "ps",
+                       anchor_mod = "ps",
                        cross_mod = "pt",
                        anchor_mapped_df_Rds = "ps_0103_mapped_df.Rds",
                        cross_mapped_df_Rds = "pt_0103_mapped_df.Rds",

@@ -41,7 +41,7 @@ output_label)
 #' @export
 #' @examples
 #' calculate_tbt_positive_ptms(distance = 5,
-#'                        anchor_mode = "ps",
+#'                        anchor_mod = "ps",
 #'                        cross_mod = "pt",
 #'                        anchor_mapped_df_Rds = "ps_0103_mapped_df.Rds",
 #'                        cross_mapped_df_Rds = "pt_0103_mapped_df.Rds",
@@ -54,6 +54,14 @@ calculate_tbt_positive_ptms = function(distance = 5,
                                   cross_mapped_df_Rds,
                                   output_label)
 {
+  # distance = 5
+  # anchor_mod = "methy_k"
+  # cross_mod = "galnac_s"
+  # anchor_mapped_df_Rds = "methy_k_80_mapped_df.Rds"
+  # cross_mapped_df_Rds = "galnac_s_80_mapped_df.Rds"
+  # output_label = "galnac_s_methy_k_positive"
+  # 
+  
   anchor_mapped_df = readRDS(anchor_mapped_df_Rds)
   cross_mapped_df = readRDS(cross_mapped_df_Rds)
   # 
@@ -77,8 +85,8 @@ calculate_tbt_positive_ptms = function(distance = 5,
   
   
   cross_mapped_df = cross_mapped_df %>%
-    dplyr::mutate(anchor_label = replace(anchor_label, anchor_label == "positive", TRUE)) %>%
-    dplyr::mutate(anchor_label = as.logical(replace(anchor_label, anchor_label == "negative", FALSE)))
+    dplyr::mutate(cross_label = replace(cross_label, cross_label == "positive", TRUE)) %>%
+    dplyr::mutate(cross_label = as.logical(replace(cross_label, cross_label == "negative", FALSE)))
   
   
   anchor_domain_list =unique(anchor_mapped_df$domain)
@@ -290,11 +298,11 @@ calculate_tbt_positive_ptms = function(distance = 5,
 #' @import stringr dplyr magrittr qvalue data.table
 #' @export
 #' @examples
-#' calculate_tbt_negative_ptms(anchor_mode = "ps",
-#'                             cross_mod = "pt",
-#'                             anchor_mapped_df_Rds = "ps_0103_mapped_df.Rds",
-#'                             cross_mapped_df_Rds = "pt_0103_mapped_df.Rds",
-#'                             output_label = "pt_ps_positive")
+#' calculate_tbt_negative_ptms(anchor_mod = "ubi",
+#'                             cross_mod = "acety",
+#'                             anchor_mapped_df_Rds = "ubi_0103_mapped_df.Rds",
+#'                             cross_mapped_df_Rds = "acety_0103_mapped_df.Rds",
+#'                             output_label = "ubi_acety_negtive")
 
 
 
@@ -326,8 +334,8 @@ calculate_tbt_negative_ptms = function(anchor_mod,
   
   
   cross_mapped_df = cross_mapped_df %>%
-    dplyr::mutate(anchor_label = replace(anchor_label, anchor_label == "positive", TRUE)) %>%
-    dplyr::mutate(anchor_label = as.logical(replace(anchor_label, anchor_label == "negative", FALSE)))
+    dplyr::mutate(cross_label = replace(cross_label, cross_label == "positive", TRUE)) %>%
+    dplyr::mutate(cross_label = as.logical(replace(cross_label, cross_label == "negative", FALSE)))
   
   
   anchor_domain_list =unique(anchor_mapped_df$domain)
@@ -416,7 +424,6 @@ calculate_tbt_negative_ptms = function(anchor_mod,
   saveRDS(domain_prot_df, file = paste0(output_label, "_domain_prot_match.Rds"))
   write.table(domain_prot_df, paste0(output_label, "_domain_prot_match.tsv"), sep = "\t",
               quote = F, row.names = F)
-  
   
   
   
