@@ -1,6 +1,6 @@
-# PTMscape
+# PTMscape user guide
 
-# to download and install
+# Download and install
 
 ```
 install.packages("devtools")
@@ -9,3 +9,9 @@ devtools::install_github("ginnyintifa/PTMscape")
 library(PTMscape)
 
 ```
+
+
+
+
+
+
