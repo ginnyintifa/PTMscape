@@ -54,13 +54,13 @@ calculate_tbt_positive_ptms = function(distance = 5,
                                   cross_mapped_df_Rds,
                                   output_label)
 {
-  # distance = 5
-  # anchor_mod = "methy_k"
-  # cross_mod = "galnac_s"
-  # anchor_mapped_df_Rds = "methy_k_80_mapped_df.Rds"
-  # cross_mapped_df_Rds = "galnac_s_80_mapped_df.Rds"
-  # output_label = "galnac_s_methy_k_positive"
-  # 
+  distance = 5
+  anchor_mod = "acety"
+  cross_mod = "ubi"
+  anchor_mapped_df_Rds = "acety_52/acety_wp_52_mapped_df.Rds"
+  cross_mapped_df_Rds = "ubi_52/ubi_wp_52_mapped_df.Rds"
+  output_label = "new_acety_ubi_positive_52"
+
   
   anchor_mapped_df = readRDS(anchor_mapped_df_Rds)
   cross_mapped_df = readRDS(cross_mapped_df_Rds)
