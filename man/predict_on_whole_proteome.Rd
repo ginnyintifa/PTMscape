@@ -20,9 +20,9 @@ predict_on_whole_proteome(ptm_site, flanking_size = 12, positive_info_file,
 
 \item{n_fold}{Number of folds used for training and prediction, default set to 2}
 
-\item{lower_bound}{the lower bound of the scaled data range, default to -1.}
+\item{lower_bound}{The lower bound of the scaled data range, default to -1.}
 
-\item{upper_bound}{the upper bound of the scaled data range, default to 1.}
+\item{upper_bound}{The upper bound of the scaled data range, default to 1.}
 
 \item{liblinear_dir}{Absolute peth of Liblinear tool.}
 

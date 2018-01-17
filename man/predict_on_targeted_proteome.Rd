@@ -25,9 +25,9 @@ predict_on_targeted_proteome(ptm_site, flanking_size = 12, positive_info_file,
 
 \item{output_label_predict}{The string to tag the output files associated with prediction proteins.}
 
-\item{lower_bound}{the lower bound of the scaled data range, default to -1.}
+\item{lower_bound}{The lower bound of the scaled data range, default to -1.}
 
-\item{upper_bound}{the upper bound of the scaled data range, default to 1.}
+\item{upper_bound}{The upper bound of the scaled data range, default to 1.}
 
 \item{liblinear_dir}{Absolute path of Liblinear tool.}
 
