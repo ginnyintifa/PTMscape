@@ -1,13 +1,3 @@
----
-title: "PTMscape User guide"
-author: "GINNY"
-date: "14 January 2018"
-output: 
-  html_document:
-    toc: true
-    theme: yeti
----
-
 
 
 # 1.Installation
@@ -154,24 +144,27 @@ PTMscape requires several user specified parameters.
 
 # 5.Reference score threshold derived from PhosphoSitePlus PTM data
 
-```{r echo = F, results= 'asis', warning=F}
-library(knitr)
-
-the_tb = data.frame(PTM_type = c("phosphoS","phosphoT","phosphoY","ubiquitinK","acetylK",
-                                 "SUMOK", "methylK","methylR"),
-                    Score_at_spec0.9 = c(0.577,0.572,0.575,0.566,0.563,0.554,0.584,0.562),
-                    Score_at_spec0.95 = c(0.613,0.607,0.604,0.586,0.59,0.604,0.621,0.608),
-                    Score_at_spec0.99 = c(0.683,0.675,0.663,0.621,0.646,0.688,0.688,0.704))
 
 
-kable(the_tb)
-```
+| PTM_type  | Score_at_spec0.9 | Score_at_spec0.95 | Score_at_spec0.99|
+| ------------- | ------------- | ------------- | ------------- |
+| phosphoS  | 0.577 |0.613|0.683|
+| phosphoT  | 0.572 |0.607|0.675|
+| phosphoY  | 0.575 |0.604|0.663|
+| ubiquitinK  | 0.566 |0.586|0.621|
+| acetylK | 0.563 |0.59|0.646|
+| SUMOyK | 0.554|0.604|0.688|
+| methylK| 0.584|0.621|0.688|
+| methylR| 0.562|0.608|0.704|
+
+
 
 
 # 6.Example script
 
 ### Whole proteom prediction
 Predict acetylation in all the proteins provided. A 2-fold cross validation will be conducted. Score threshold will be determined at specificity level 0.99.Two text output files will be produced. **acety_wp_mapped_df.tsv** and **acety_wp_test.tsv**.
+
 ```{r, eval=F}
 
 predict_on_whole_proteome(ptm_site = "K",
