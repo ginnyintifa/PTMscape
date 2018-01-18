@@ -31,7 +31,7 @@ library(PTMscape)
 ```
 
 
-`PTMscape` requires installation of Liblinear library, it can be downloaded from [Liblinear](https://www.csie.ntu.edu.tw/~cjlin/liblinear/). After installation of Liblinear on your machine, a small [change](https://www.csie.ntu.edu.tw/~cjlin/liblinear/FAQ.html#training_and_prediction) of source code in the file linear.cpp(see below) is required so as to activate probability outputs for SVM.
+`PTMscape` requires installation of `Liblinear` library, it can be downloaded from [Liblinear website](https://www.csie.ntu.edu.tw/~cjlin/liblinear/). After installation of `Liblinear` on your machine, a small [change](https://www.csie.ntu.edu.tw/~cjlin/liblinear/FAQ.html#training_and_prediction) of source code in the file linear.cpp(see below) is required so as to activate probability outputs for SVM.
 
 
 
@@ -60,13 +60,13 @@ int check_probability_model(const struct model *model_)
 
 In this mode, it is assumed that user wants to discover all possible PTM sites in proteins of interest. Known PTM sites will be mapped to all the proteins. Then the whole data will be divided into k folds as specified by the user. Each time (k-1) folds of the data will be used as training data to fit a linear SVM model, subsequently the rest one fold of the data will be predicted by the model trained. This process is conducted for k times so that each fold of the data will be predicted once by the rest data. Finally known PTM sites plus predicted PTM sites (at a specificity level set by the user) will be the positive PTM sites. 
 
-In this mode, user should call the function `predict_on_whole_proteome`. Input files and parameters will be described in the following sections.
+In this mode, user should call the function `predict_on_whole_proteome()`. Input files and parameters will be described in the following sections.
 
 ### Targeted prediction mode.
 
 In this mode, it is assumed that user provides a set of reliable PTM sites and a Fasta file contaning associated protein seqeunces(i.e. User is confident about the positive/negative designation of PTM sites in these protein sequences). The aim is to predict PTM events in uncharted proteins sequences with model trained from the reliable set. After prediction, the score threshold of positive/negative site will be selected by either refering to the threshold derived from large dataset(provided by `PTMscape` tool) or conducting cross validation within the known data and select the cutoff corresponding to user specified specificity level.  
 
-In this mode, user should call the function `predict_on_targeted_proteome`. Input files and parameters will be described in the following sections.
+In this mode, user should call the function `predict_on_targeted_proteome()`. Input files and parameters will be described in the following sections.
 
 
 
@@ -77,7 +77,7 @@ In this mode, user should call the function `predict_on_targeted_proteome`. Inpu
 
 * 1. Known PTM sites
 
-User has to provide the Uniprot accession number of proteins and position of the PTM sites in required format. See **sample_known_ps.tsv**.
+User has to provide the Uniprot accession ID of proteins and position of the PTM sites in required format. See **sample_known_ps.tsv**.
 
 * 2. Fasta file for proteins of interest
 
