@@ -2,10 +2,10 @@
 
 # 1.Installation
 
-PTMscape is available as a github [repo](https://github.com/ginnyintifa/PTMscape). It can be downloaded and installed in R with following code:
+`PTMscape` is available as a github [repo](https://github.com/ginnyintifa/PTMscape). It can be downloaded and installed in R with following code:
 
 
-Installation of qvalue from bioconductor is required:
+Installation of `qvalue` from `bioconductor` is required:
 
 ```{r, eval = F}
 
@@ -14,13 +14,13 @@ biocLite("qvalue")
 
 ```
 
-If devtools is not installed:
+If `devtools` is not installed:
 
 ```{r, eval = F}
 install.packages("devtools")
 ```
 
-Install PTMscape:
+Install `PTMscape`:
 
 ```{r, eval = F}
 
@@ -31,7 +31,7 @@ library(PTMscape)
 ```
 
 
-PTMscape requires installation of Liblinear library, it can be downloaded from [Liblinear](https://www.csie.ntu.edu.tw/~cjlin/liblinear/). After installation of Liblinear on your machine, a small [change](https://www.csie.ntu.edu.tw/~cjlin/liblinear/FAQ.html#training_and_prediction) of source code in the file linear.cpp(see below) is required so as to activate probability outputs for SVM.
+`PTMscape` requires installation of Liblinear library, it can be downloaded from [Liblinear](https://www.csie.ntu.edu.tw/~cjlin/liblinear/). After installation of Liblinear on your machine, a small [change](https://www.csie.ntu.edu.tw/~cjlin/liblinear/FAQ.html#training_and_prediction) of source code in the file linear.cpp(see below) is required so as to activate probability outputs for SVM.
 
 
 
@@ -64,7 +64,7 @@ In this mode, user should call the function `predict_on_whole_proteome`. Input f
 
 ### Targeted prediction mode.
 
-In this mode, it is assumed that user provides a set of reliable PTM sites and a Fasta file contaning associated protein seqeunces(i.e. User is confident about the positive/negative designation of PTM sites in these protein sequences). The aim is to predict PTM events in uncharted proteins sequences with model trained from the reliable set. After prediction, the score threshold of positive/negative site will be selected by either refering to the threshold derived from large dataset(provided by PTMscape tool) or conducting cross validation within the known data and select the cutoff corresponding to user specified specificity level.  
+In this mode, it is assumed that user provides a set of reliable PTM sites and a Fasta file contaning associated protein seqeunces(i.e. User is confident about the positive/negative designation of PTM sites in these protein sequences). The aim is to predict PTM events in uncharted proteins sequences with model trained from the reliable set. After prediction, the score threshold of positive/negative site will be selected by either refering to the threshold derived from large dataset(provided by `PTMscape` tool) or conducting cross validation within the known data and select the cutoff corresponding to user specified specificity level.  
 
 In this mode, user should call the function `predict_on_targeted_proteome`. Input files and parameters will be described in the following sections.
 
@@ -85,7 +85,7 @@ In whole proteome prediction mode, only one Fasta file is required. In targeted 
 
 ### PTMscape provided input files
 
-Several files need to be downloaded from this [webpage](http://137.132.97.109:59739/CSSB_LAB/) before running PTMscape.
+Several files need to be downloaded from this [webpage](http://137.132.97.109:59739/CSSB_LAB/) before running `PTMscape`.
 
 
 
@@ -96,11 +96,12 @@ Several files need to be downloaded from this [webpage](http://137.132.97.109:59
 * 5.  Subcellular locations of each protein is in file **subcellusr_location_df_pure.Rds**, the information is retrieved from the database called COMPARTMENTS.
 
 
+Please download these files and put them in the same working directory where you installed `PTMscape`.
 
 
 # 4.Input parameter specification 
 
-PTMscape requires several user specified parameters.
+`PTMscape` requires several user specified parameters.
 
 
 ### Whole proteome prediction mode
