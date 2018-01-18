@@ -347,6 +347,45 @@ combine_all_features = function(pos_aaindex = NULL,
   
 }
 
+
+
+
+combine_all_features_no_spider = function(pos_aaindex = NULL,
+                                candi_aaindex,
+                                pos_spider = NULL,
+                                candi_pssm,
+                                output_label)
+  
+{
+  
+  noc_not_na_candi_cluster = readRDS(candi_aaindex)
+  noc_not_na_candi_pssm = readRDS(candi_pssm)
+  
+  
+  noc_not_na_candi_feature = cbind(noc_not_na_candi_cluster,
+                                   noc_not_na_candi_pssm)
+  saveRDS(noc_not_na_candi_feature, file = paste0(output_label, "_noc_not_na_candi_feature.Rds"))
+  rm(noc_not_na_candi_feature)
+  
+  
+  
+  if(!is.null(pos_aaindex))
+  {
+    noc_not_na_pos_cluster = readRDS(pos_aaindex)
+    noc_not_na_pos_pssm = readRDS(pos_pssm)
+    
+    noc_not_na_pos_feature = cbind(noc_not_na_pos_cluster,
+                                   noc_not_na_pos_pssm)
+    saveRDS(noc_not_na_pos_feature, file = paste0(output_label, "_noc_not_na_pos_feature.Rds"))
+    rm(noc_not_na_pos_feature)
+    
+  }
+  
+}
+
+
+
+
 ### more process with the negative data set , actually the negative dataset is either decoy or candidate
 
 ### and the process can be two forms now, 1 knn cleaning, 2 just randomly sample the same number as the positive set

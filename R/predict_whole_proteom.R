@@ -4,6 +4,7 @@
 #' This function generates feature data for whole proteome by mapping the positive PTM info to protein sequences, constructing windows and extracting 3 sets of features.
 #' @param ptm_site The amino acid this PTM involves, in upper-case single letter representation.
 #' @param flanking_size The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
+#' @param SPIDER A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
 #' @param positive_info_file A text file containing the positive PTM sites info in required format.
 #' @param protein_fasta_file A fext file containing the proteins sequences of interest in Fasta format.
 #' @param output_label The string to tag the output files.
@@ -13,11 +14,12 @@
 #' @examples 
 #' generate_feature_wp(ptm_site = "S",
 #'              flanking_size = 12,
+#'              SPIDER = T,
 #'              positive_info_file = "ps_PSP.tsv",
 #'              protein_fasta_file = "S_sp_fasta.tsv",
 #'              output_label = "ps_0103")
 
-generate_feature_wp = function(ptm_site, flanking_size=12, 
+generate_feature_wp = function(ptm_site, flanking_size=12, SPIDER = T,
                             positive_info_file, protein_fasta_file,
                             output_label)
 {
@@ -51,62 +53,112 @@ generate_feature_wp = function(ptm_site, flanking_size=12,
   sp_seq = all_sp[c(F,T)]
   sp_uni_id = sapply(1:length(sp_id),function(i) strsplit(sp_id[i], split = "|", fixed = T)[[1]][2])
   
-  spider_protID = data.table::fread("spider_protID.tsv", stringsAsFactors = F)
-  
-  not_na_id = intersect(sp_uni_id, spider_protID$x)
-  which_sel = which(sp_uni_id%in%not_na_id)
-  
-  not_na_sp_uni_id = sp_uni_id[which_sel]
-  not_na_sp_seq = sp_seq[which_sel]
-  
-
-  
-  ### positive PTM sites from PSP
-  #### positive_info_file = "ps_PSP.tsv"
   ps_info = data.table::fread(positive_info_file, stringsAsFactors = F)
   
-  
-  ##############################################################################################
-  ############ FEATURE EXTRACTION
-  ##############################################################################################
-  window_formation(ptm_site,flanking_size,
-                   not_na_sp_seq, not_na_sp_uni_id, ps_info,
-                   output_label)
-  
-  
-  aaindex_feature_extraction(aaindex_cluster_order,
-                             paste0(output_label,"_candidate.Rds"),
-                             flanking_size + 1,
-                             output_label)
-  
-  spider_feature_joining_without_mean(paste0(output_label,"_candidate.Rds"),
-                                      "extracted_spider.Rds",
-                                      c(1,6,8,9),
-                                      c(8,9),
-                                      flanking_size + 1,  
-                                      output_label)
-  
-  
-  pssm_generation(paste0(output_label,"_candidate.Rds"),
-                  flanking_size+1,
-                  output_label)
-  
-  pssm_feature_extraction(paste0(output_label,"_candidate.Rds"),
-                          paste0(output_label,"_pssm.Rds"),
-                          flanking_size + 1,
-                          output_label)
-  
-  
-  
-  combine_all_features(pos_aaindex = paste0(output_label, "_noc_pos_cluster_matrix.Rds"),
-                       candi_aaindex = paste0(output_label, "_noc_candi_cluster_matrix.Rds"),
-                       pos_spider = paste0(output_label, "_noc_pos_structure_matrix.Rds"),
-                       candi_spider = paste0(output_label, "_noc_candi_structure_matrix.Rds"),
-                       pos_pssm = paste0(output_label, "_noc_pos_pssm_matrix.Rds"),
-                       candi_pssm = paste0(output_label, "_noc_candi_pssm_matrix.Rds"),
-                       output_label)
-  
-  
+  if(SPIDER == TRUE)
+  {
+    
+    spider_protID = data.table::fread("spider_protID.tsv", stringsAsFactors = F)
+    
+    not_na_id = intersect(sp_uni_id, spider_protID$x)
+    which_sel = which(sp_uni_id%in%not_na_id)
+    
+    not_na_sp_uni_id = sp_uni_id[which_sel]
+    not_na_sp_seq = sp_seq[which_sel]
+    
+    
+    
+    ### positive PTM sites from PSP
+    #### positive_info_file = "ps_PSP.tsv"
+    
+    
+    ##############################################################################################
+    ############ FEATURE EXTRACTION
+    ##############################################################################################
+    window_formation(ptm_site,flanking_size,
+                     not_na_sp_seq, not_na_sp_uni_id, ps_info,
+                     output_label)
+    
+    
+    aaindex_feature_extraction(aaindex_cluster_order,
+                               paste0(output_label,"_candidate.Rds"),
+                               flanking_size + 1,
+                               output_label)
+    
+    
+    spider_feature_joining_without_mean(paste0(output_label,"_candidate.Rds"),
+                                        "extracted_spider.Rds",
+                                        c(1,6,8,9),
+                                        c(8,9),
+                                        flanking_size + 1,  
+                                        output_label)
+    
+    
+    pssm_generation(paste0(output_label,"_candidate.Rds"),
+                    flanking_size+1,
+                    output_label)
+    
+    pssm_feature_extraction(paste0(output_label,"_candidate.Rds"),
+                            paste0(output_label,"_pssm.Rds"),
+                            flanking_size + 1,
+                            output_label)
+    
+    
+    
+    combine_all_features(pos_aaindex = paste0(output_label, "_noc_pos_cluster_matrix.Rds"),
+                         candi_aaindex = paste0(output_label, "_noc_candi_cluster_matrix.Rds"),
+                         pos_spider = paste0(output_label, "_noc_pos_structure_matrix.Rds"),
+                         candi_spider = paste0(output_label, "_noc_candi_structure_matrix.Rds"),
+                         pos_pssm = paste0(output_label, "_noc_pos_pssm_matrix.Rds"),
+                         candi_pssm = paste0(output_label, "_noc_candi_pssm_matrix.Rds"),
+                         output_label)
+    
+    
+    
+  }else{
+    
+
+    
+    not_na_sp_uni_id = sp_uni_id
+    not_na_sp_seq = sp_seq
+    
+    ### positive PTM sites from PSP
+    #### positive_info_file = "ps_PSP.tsv"
+    
+    
+    ##############################################################################################
+    ############ FEATURE EXTRACTION
+    ##############################################################################################
+    window_formation(ptm_site,flanking_size,
+                     not_na_sp_seq, not_na_sp_uni_id, ps_info,
+                     output_label)
+    
+    
+    aaindex_feature_extraction(aaindex_cluster_order,
+                               paste0(output_label,"_candidate.Rds"),
+                               flanking_size + 1,
+                               output_label)
+    
+    
+    pssm_generation(paste0(output_label,"_candidate.Rds"),
+                    flanking_size+1,
+                    output_label)
+    
+    pssm_feature_extraction(paste0(output_label,"_candidate.Rds"),
+                            paste0(output_label,"_pssm.Rds"),
+                            flanking_size + 1,
+                            output_label)
+    
+    
+    combine_all_features_no_spider(pos_aaindex = paste0(output_label, "_noc_pos_cluster_matrix.Rds"),
+                         candi_aaindex = paste0(output_label, "_noc_candi_cluster_matrix.Rds"),
+                         pos_pssm = paste0(output_label, "_noc_pos_pssm_matrix.Rds"),
+                         candi_pssm = paste0(output_label, "_noc_candi_pssm_matrix.Rds"),
+                         output_label)
+    
+    
+    
+  }
   
 }
 
@@ -346,6 +398,7 @@ present_prediction_wp = function(positive_index_file_names,
 #'  A function to predict and annotate whole proteom PTM sites
 #' @param ptm_site The amino acid this PTM involves, in upper-case single letter representation.
 #' @param flanking_size The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
+#' @param SPIDER A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
 #' @param positive_info_file A text file containing the positive PTM sites info in required format.
 #' @param protein_fasta_file A fext file containing the proteins sequences of interest in Fasta format.
 #' @param liblinear_dir Absolute peth of Liblinear tool.
@@ -362,6 +415,7 @@ present_prediction_wp = function(positive_index_file_names,
 #' @examples 
 #' predict_on_whole_proteome(ptm_site = "S",
 #'                          flanking_size = 12,
+#'                          SPIDER = T,
 #'                          positive_info_file = "ps_PSP.tsv",
 #'                          protein_fasta_file = "S_sp_fasta.tsv",
 #'                          n_fold = 2,
@@ -378,6 +432,7 @@ present_prediction_wp = function(positive_index_file_names,
 
 predict_on_whole_proteome = function(ptm_site,
                                      flanking_size = 12,
+                                     SPIDER = T,
                                      positive_info_file,
                                      protein_fasta_file,
                                      n_fold = 2,
@@ -392,6 +447,7 @@ predict_on_whole_proteome = function(ptm_site,
   
   generate_feature_wp(ptm_site = ptm_site,
                                   flanking_size = flanking_size,
+                      SPIDER = SPIDER,
                                   positive_info_file = positive_info_file,
                                   protein_fasta_file = protein_fasta_file,
                                   output_label = output_label)
