@@ -4,16 +4,25 @@
 
 PTMscape is available as a github [repo](https://github.com/ginnyintifa/PTMscape). It can be downloaded and installed in R with following code:
 
-```{r, eval = F}
 
-#Installation of qvalue from bioconductor is required.
+Installation of qvalue from bioconductor is required:
+
+```{r, eval = F}
 
 source("https://bioconductor.org/biocLite.R")
 biocLite("qvalue")
 
+```
 
-#If devtools is not installed:
+If devtools is not installed:
+
+```{r, eval = F}
 install.packages("devtools")
+```
+
+Install PTMscape:
+
+```{r, eval = F}
 
 library("devtools")
 devtools::install_github("ginnyintifa/PTMscape")
@@ -72,7 +81,7 @@ User has to provide the Uniprot accession number of proteins and position of the
 
 * 2. Fasta file for proteins of interest
 
-In whole proteome prediction mode, only one Fasta file is required. In targeted prediction mode, two Fasta files are needed. One consists proteins containing the reliable PTM sites information, the other consists protein sequences from which PTM sites are to be predicted. The format can be learned from **sample_known_fasta.tsv**.
+In whole proteome prediction mode, only one Fasta file is required. In targeted prediction mode, two Fasta files are needed. One consists proteins containing the reliable PTM sites information, the other consists protein sequences from which PTM sites are to be predicted. The format can be learned from **sample_known_fasta.tsv** and **sample_predict_fasta.tsv**.
 
 ### PTMscape provided input files
 
@@ -163,14 +172,14 @@ PTMscape requires several user specified parameters.
 # 6.Example script
 
 ### Whole proteom prediction
-Predict acetylation in all the proteins provided. A 2-fold cross validation will be conducted. Score threshold will be determined at specificity level 0.99.Two text output files will be produced. **acety_wp_mapped_df.tsv** and **acety_wp_test.tsv**.
+Predict acetylation in all the proteins provided. A 2-fold cross validation will be conducted. Score threshold will be determined at specificity level 0.99.Two text output files will be produced. **ps_samle_wp_mapped_df.tsv** and **ps_sample_wp_test.tsv**.
 
 ```{r, eval=F}
 
-predict_on_whole_proteome(ptm_site = "K",
+predict_on_whole_proteome(ptm_site = "S",
                           flanking_size = 12,
-                          positive_info_file = "acety_PSP.tsv",
-                          protein_fasta_file = "K_sp_fasta.tsv",
+                          positive_info_file = "sample_known_ps.tsv",
+                          protein_fasta_file = "sample_known_fasta.tsv",
                           n_fold = 2,
                           lower_bound = -1,
                           upper_bound = 1,
@@ -178,7 +187,7 @@ predict_on_whole_proteome(ptm_site = "K",
                           feature_file_path = "/data/ginny/PTMscape_test/",
                           cvlog_path_name = "/data/ginny/PTMscape_test/cvlog.txt",
                           specificity_level = 0.99,
-                          output_label = "acety_wp")
+                          output_label = "ps_sample_wp")
 
 ```
 
@@ -187,16 +196,16 @@ predict_on_whole_proteome(ptm_site = "K",
 
 ### Targeted prediction
 
-Know phosphoS sites and proteins are used to train a linear SVM model. Select score threshold by cross validating within known PTM sites. A score corresponding to specificity 0.99 will be chosen as the threshold. Two text output files will be produced. **target_ps_predict_mapped_df.tsv** and **target_ps_predict_test.tsv**.
+Know phosphoS sites and proteins are used to train a linear SVM model. Select score threshold by cross validating within known PTM sites. A score corresponding to specificity 0.99 will be chosen as the threshold. Two text output files will be produced. **ps_sample_predict_mapped_df.tsv** and **ps_sample_predict_test.tsv**.
 
 ```{r, eval=F}
 predict_on_targeted_proteome (ptm_site = "S", 
                               flanking_size=12, 
-                              positive_info_file = "sub_known_ps.tsv", 
-                              known_protein_fasta_file = "sub_known_fasta.tsv",
-                              predict_protein_fasta_file = "sub_predict_fasta.tsv",
-                              output_label_training = "target_ps_training",
-                              output_label_predict = "target_ps_predict",
+                              positive_info_file = "sample_known_ps.tsv", 
+                              known_protein_fasta_file = "sample_known_fasta.tsv",
+                              predict_protein_fasta_file = "sample_predict_fasta.tsv",
+                              output_label_training = "ps_sample_training",
+                              output_label_predict = "ps_sample_predict",
                               lower_bound = -1,
                               upper_bound = 1,
                               liblinear_dir = "/data/ginny/liblinear-2.11/",
@@ -215,11 +224,11 @@ Select score threshold by cross validating within known PTM sites. Score thresho
 ```{r, eval=F}
 predict_on_targeted_proteome (ptm_site = "S", 
                               flanking_size=12, 
-                              positive_info_file = "sub_known_ps.tsv", 
-                              known_protein_fasta_file = "sub_known_fasta.tsv",
-                              predict_protein_fasta_file = "sub_predict_fasta.tsv",
-                              output_label_training = "new_target_ps_training",
-                              output_label_predict = "new_target_ps_predict",
+                              positive_info_file = "sample_known_ps.tsv", 
+                              known_protein_fasta_file = "sample_known_fasta.tsv",
+                              predict_protein_fasta_file = "sample_predict_fasta.tsv",
+                              output_label_training = "ps_sample_training",
+                              output_label_predict = "ps_sample_predict",
                               lower_bound = -1,
                               upper_bound = 1,
                               liblinear_dir = "/data/ginny/liblinear-2.11/",
@@ -234,7 +243,7 @@ predict_on_targeted_proteome (ptm_site = "S",
 
 ### Crosstalk analysis
 
-Analyze positive crosstalk events between methylationK and phosphorylationS. The output file will be **methy_k_ps_positive_test.sv**.
+Analyze positive crosstalk events between methylationK and phosphorylationS. The output file will be **methy_k_ps_positive_test.sv**. 
 
 
 ```{r, eval = F}
