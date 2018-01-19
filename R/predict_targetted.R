@@ -463,8 +463,9 @@ present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
                                  output_label = output_label)
     
   }else{
-    generate_feature_whole_proteome(ptm_site = ptm_site,
+    generate_feature_wp(ptm_site = ptm_site,
                                     flanking_size = flanking_size,
+                                    SPIDER = SPIDER,
                                     positive_info_file = positive_info_file,
                                     protein_fasta_file = known_protein_fasta_file,
                                     output_label = paste0(output_label, "_known_cv"))
