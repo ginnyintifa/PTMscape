@@ -352,7 +352,7 @@ combine_all_features = function(pos_aaindex = NULL,
 
 combine_all_features_no_spider = function(pos_aaindex = NULL,
                                 candi_aaindex,
-                                pos_spider = NULL,
+                                pos_pssm = NULL,
                                 candi_pssm,
                                 output_label)
   
