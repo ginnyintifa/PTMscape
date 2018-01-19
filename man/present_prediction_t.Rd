@@ -5,10 +5,11 @@
 \title{Present Liblinear prediction results}
 \usage{
 present_prediction_t(flag_for_score_threshold_chosen = "reference",
-  score_threshold, ptm_site, flanking_size = 12, pred_candidate_df_Rds_name,
-  pred_score_file_name, positive_info_file, known_protein_fasta_file,
-  n_fold = 2, lower_bound = -1, upper_bound = 1, liblinear_dir,
-  feature_file_path, cvlog_path_name, specificity_level, output_label)
+  score_threshold, ptm_site, flanking_size = 12, SPIDER = T,
+  pred_candidate_df_Rds_name, pred_score_file_name, positive_info_file,
+  known_protein_fasta_file, n_fold = 2, lower_bound = -1, upper_bound = 1,
+  liblinear_dir, feature_file_path, cvlog_path_name, specificity_level,
+  output_label)
 }
 \arguments{
 \item{flag_for_score_threshold_chosen}{A string indicating whether use reference score threshold or get from the user supplied training data, defalt set to "reference".}
@@ -18,6 +19,8 @@ present_prediction_t(flag_for_score_threshold_chosen = "reference",
 \item{ptm_site}{The amino acid this PTM involves, in upper-case single letter representation.}
 
 \item{flanking_size}{The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.}
+
+\item{SPIDER}{A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.}
 
 \item{pred_candidate_df_Rds_name}{An Rds file containing the candidate data frame of the proteins to be predicted.}
 

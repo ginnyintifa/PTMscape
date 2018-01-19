@@ -407,6 +407,7 @@ predict_with_liblinear = function(liblinear_dir,
 #' @param score_threshold A numerical value between 0 to 1 indicating the reference score threshold (supply when in "reference")
 #' @param ptm_site The amino acid this PTM involves, in upper-case single letter representation.
 #' @param flanking_size The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
+#' @param SPIDER A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
 #' @param positive_info_file A text file containing the positive PTM sites info in required format.
 #' @param known_protein_fasta_file A fext file containing the proteins sequences of interest and known PTM sites in Fasta format.
 #' @param pred_candidate_df_Rds_name An Rds file containing the candidate data frame of the proteins to be predicted.
@@ -442,6 +443,7 @@ predict_with_liblinear = function(liblinear_dir,
 present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
                                        score_threshold,
                                        ptm_site, flanking_size = 12,
+                                       SPIDER = T,
                                        pred_candidate_df_Rds_name,
                                        pred_score_file_name,
                                        positive_info_file, 
