@@ -4,16 +4,19 @@
 \alias{predict_on_targeted_proteome}
 \title{Predict on targeted proteome.}
 \usage{
-predict_on_targeted_proteome(ptm_site, flanking_size = 12, positive_info_file,
-  known_protein_fasta_file, predict_protein_fasta_file, output_label_training,
-  output_label_predict, lower_bound = -1, upper_bound = 1, liblinear_dir,
-  feature_file_path, cvlog_path_name, specificity_level,
-  flag_for_score_threshold_chosen = "reference", score_threshold)
+predict_on_targeted_proteome(ptm_site, flanking_size = 12, SPIDER = T,
+  positive_info_file, known_protein_fasta_file, predict_protein_fasta_file,
+  output_label_training, output_label_predict, lower_bound = -1,
+  upper_bound = 1, liblinear_dir, feature_file_path, cvlog_path_name,
+  specificity_level, flag_for_score_threshold_chosen = "reference",
+  score_threshold)
 }
 \arguments{
 \item{ptm_site}{The amino acid this PTM involves, in upper-case single letter representation.}
 
 \item{flanking_size}{The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.}
+
+\item{SPIDER}{A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.}
 
 \item{positive_info_file}{A text file containing the positive PTM sites info in required format.}
 
@@ -52,6 +55,7 @@ This function outputs the features generated from input files.
 \examples{
 predict_on_targeted_proteome = function (ptm_site = "S", 
                                          flanking_size=12, 
+                                         SPIDER = T,
                                          positive_info_file = "known_ps.tsv", 
                                          known_protein_fasta_file = "known_fasta.tsv",
                                          predict_protein_fasta_file = "predict_fasta.tsv",

@@ -9,6 +9,7 @@
 #' This function generates feature data for targeted by mapping the positive PTM info to protein sequences, constructing windows and extracting 3 sets of features.
 #' @param ptm_site The amino acid this PTM involves, in upper-case single letter representation.
 #' @param flanking_size The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
+#' @param SPIDER A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
 #' @param positive_info_file A text file containing the positive PTM sites info in required format.
 #' @param known_protein_fasta_file A fext file containing the proteins sequences of interest and known PTM sites in Fasta format.
 #' @param predict_protein_fasta_file A fext file containing the proteins sequences with PTM sites to be predicted in Fasta format.
@@ -20,6 +21,7 @@
 #' @examples 
 #' generate_feature_t(ptm_site = "S",
 #'             flanking_size = 12,
+#'             SPIDER = T,
 #'             positive_info_file = "known_ps.tsv",
 #'             known_protein_fasta_file = "known_fasta.tsv",
 #'             predict_protein_fasta_file = "predict_fasta.tsv",
@@ -28,6 +30,7 @@
 
 
 generate_feature_t = function(ptm_site, flanking_size=12, 
+                              SPIDER = T,
                                      positive_info_file, 
                                      known_protein_fasta_file, predict_protein_fasta_file,
                                      output_label_training, output_label_predict)
@@ -58,7 +61,6 @@ generate_feature_t = function(ptm_site, flanking_size=12,
   ### find the intersection of user provided protein sequences and the spider info 
   #### protein_fasta_file = "S_sp_fasta.tsv"
   
-  spider_protID = data.table::fread("spider_protID.tsv", stringsAsFactors = F)
   
   
   #####
@@ -68,104 +70,184 @@ generate_feature_t = function(ptm_site, flanking_size=12,
   known_sp_uni_id = sapply(1:length(known_sp_id),function(i) 
     strsplit(known_sp_id[i], split = "|", fixed = T)[[1]][2])
   
-  known_not_na_id = intersect(known_sp_uni_id, spider_protID$x)
-  known_which_sel = which(known_sp_uni_id%in%known_not_na_id)
-  
-  known_not_na_sp_uni_id = known_sp_uni_id[known_which_sel]
-  known_not_na_sp_seq = known_sp_seq[known_which_sel]
-  
-  #####
   predict_all_sp = readLines(predict_protein_fasta_file)
   predict_sp_id = predict_all_sp[c(T,F)]
   predict_sp_seq = predict_all_sp[c(F,T)]
   predict_sp_uni_id = sapply(1:length(predict_sp_id),function(i) 
     strsplit(predict_sp_id[i], split = "|", fixed = T)[[1]][2])
   
-  predict_not_na_id = intersect(predict_sp_uni_id, spider_protID$x)
-  predict_which_sel = which(predict_sp_uni_id%in%predict_not_na_id)
-  
-  predict_not_na_sp_uni_id = predict_sp_uni_id[predict_which_sel]
-  predict_not_na_sp_seq = predict_sp_seq[predict_which_sel]
   
   
-  ### positive PTM sites from PSP
-  #### positive_info_file = "ps_PSP.tsv"
   ps_info = data.table::fread(positive_info_file, stringsAsFactors = F)
   
-  
-  ##############################################################################################
-  ############ FEATURE EXTRACTION 
-  ##############################################################################################
-  window_formation(ptm_site,flanking_size,
-                   known_not_na_sp_seq, known_not_na_sp_uni_id, ps_info,
-                   output_label_training)
-  
-  
-  aaindex_feature_extraction(aaindex_cluster_order,
-                             paste0(output_label_training,"_candidate.Rds"),
-                             flanking_size + 1,
-                             output_label_training)
-  
-  
-  spider_feature_joining_without_mean(paste0(output_label_training,"_candidate.Rds"),
-                                      "extracted_spider.Rds",
-                                      c(1,6,8,9),
-                                      c(8,9),
-                                      flanking_size + 1,  
-                                      output_label_training)
-  
-  
-  pssm_generation(paste0(output_label_training,"_candidate.Rds"),
-                  flanking_size+1,
-                  output_label_training)
-  
-  pssm_feature_extraction(paste0(output_label_training,"_candidate.Rds"),
-                          paste0(output_label_training,"_pssm.Rds"),
-                          flanking_size + 1,
-                          output_label_training)
-  
-  
-  
-  combine_all_features(pos_aaindex = paste0(output_label_training, "_noc_pos_cluster_matrix.Rds"),
-                       candi_aaindex = paste0(output_label_training, "_noc_candi_cluster_matrix.Rds"),
-                       pos_spider = paste0(output_label_training, "_noc_pos_structure_matrix.Rds"),
-                       candi_spider = paste0(output_label_training, "_noc_candi_structure_matrix.Rds"),
-                       pos_pssm = paste0(output_label_training, "_noc_pos_pssm_matrix.Rds"),
-                       candi_pssm = paste0(output_label_training, "_noc_candi_pssm_matrix.Rds"),
-                       output_label = output_label_training)
-  
-  #### for uncharted proteins, only divide into windows, not need to record the label 
-  
-  
-  ### think about this, only extract features 
-  window_formation_no_positive(ptm_site,flanking_size,
-                               predict_not_na_sp_seq, predict_not_na_sp_uni_id,
+  if(SPIDER == TRUE)
+  {
+    spider_protID = data.table::fread("spider_protID.tsv", stringsAsFactors = F)
+    
+    
+    known_not_na_id = intersect(known_sp_uni_id, spider_protID$x)
+    known_which_sel = which(known_sp_uni_id%in%known_not_na_id)
+    
+    known_not_na_sp_uni_id = known_sp_uni_id[known_which_sel]
+    known_not_na_sp_seq = known_sp_seq[known_which_sel]
+    
+    #####
+    
+    predict_not_na_id = intersect(predict_sp_uni_id, spider_protID$x)
+    predict_which_sel = which(predict_sp_uni_id%in%predict_not_na_id)
+    
+    predict_not_na_sp_uni_id = predict_sp_uni_id[predict_which_sel]
+    predict_not_na_sp_seq = predict_sp_seq[predict_which_sel]
+    
+    
+    ### positive PTM sites from PSP
+    #### positive_info_file = "ps_PSP.tsv"
+    
+    
+    ##############################################################################################
+    ############ FEATURE EXTRACTION 
+    ##############################################################################################
+    window_formation(ptm_site,flanking_size,
+                     known_not_na_sp_seq, known_not_na_sp_uni_id, ps_info,
+                     output_label_training)
+    
+    
+    aaindex_feature_extraction(aaindex_cluster_order,
+                               paste0(output_label_training,"_candidate.Rds"),
+                               flanking_size + 1,
+                               output_label_training)
+    
+    
+    spider_feature_joining_without_mean(paste0(output_label_training,"_candidate.Rds"),
+                                        "extracted_spider.Rds",
+                                        c(1,6,8,9),
+                                        c(8,9),
+                                        flanking_size + 1,  
+                                        output_label_training)
+    
+    
+    pssm_generation(paste0(output_label_training,"_candidate.Rds"),
+                    flanking_size+1,
+                    output_label_training)
+    
+    pssm_feature_extraction(paste0(output_label_training,"_candidate.Rds"),
+                            paste0(output_label_training,"_pssm.Rds"),
+                            flanking_size + 1,
+                            output_label_training)
+    
+    
+    
+    combine_all_features(pos_aaindex = paste0(output_label_training, "_noc_pos_cluster_matrix.Rds"),
+                         candi_aaindex = paste0(output_label_training, "_noc_candi_cluster_matrix.Rds"),
+                         pos_spider = paste0(output_label_training, "_noc_pos_structure_matrix.Rds"),
+                         candi_spider = paste0(output_label_training, "_noc_candi_structure_matrix.Rds"),
+                         pos_pssm = paste0(output_label_training, "_noc_pos_pssm_matrix.Rds"),
+                         candi_pssm = paste0(output_label_training, "_noc_candi_pssm_matrix.Rds"),
+                         output_label = output_label_training)
+    
+    #### for uncharted proteins, only divide into windows, not need to record the label 
+    
+    
+    ### think about this, only extract features 
+    window_formation_no_positive(ptm_site,flanking_size,
+                                 predict_not_na_sp_seq, predict_not_na_sp_uni_id,
+                                 output_label_predict)
+    ### the windows in the predition part are called "_predict.Rds"
+    
+    aaindex_feature_extraction(aaindex_cluster_order,
+                               paste0(output_label_predict,"_candidate.Rds"),
+                               flanking_size + 1,
                                output_label_predict)
-  ### the windows in the predition part are called "_predict.Rds"
+    
+    spider_feature_joining_without_mean(paste0(output_label_predict,"_candidate.Rds"),
+                                        "extracted_spider.Rds",
+                                        c(1,6,8,9),
+                                        c(8,9),
+                                        flanking_size + 1,  
+                                        output_label_predict)
+    
+    
+    pssm_feature_extraction(paste0(output_label_predict,"_candidate.Rds"),
+                            paste0(output_label_training,"_pssm.Rds"),
+                            flanking_size + 1,
+                            output_label_predict)
+    
+    combine_all_features(candi_aaindex = paste0(output_label_predict, "_noc_candi_cluster_matrix.Rds"),
+                         candi_spider = paste0(output_label_predict, "_noc_candi_structure_matrix.Rds"),
+                         candi_pssm = paste0(output_label_predict, "_noc_candi_pssm_matrix.Rds"),
+                         output_label = output_label_predict)
+    
+  }else{
+    
+    known_not_na_sp_uni_id = known_sp_uni_id
+    known_not_na_sp_seq = known_sp_seq
+    
+    
+    predict_not_na_sp_uni_id = predict_sp_uni_id
+    predict_not_na_sp_seq = predict_sp_seq
+    
+    
+    
+    window_formation(ptm_site,flanking_size,
+                     known_not_na_sp_seq, known_not_na_sp_uni_id, ps_info,
+                     output_label_training)
+    
+    
+    aaindex_feature_extraction(aaindex_cluster_order,
+                               paste0(output_label_training,"_candidate.Rds"),
+                               flanking_size + 1,
+                               output_label_training)
+    
+    
+    
+    
+    pssm_generation(paste0(output_label_training,"_candidate.Rds"),
+                    flanking_size+1,
+                    output_label_training)
+    
+    pssm_feature_extraction(paste0(output_label_training,"_candidate.Rds"),
+                            paste0(output_label_training,"_pssm.Rds"),
+                            flanking_size + 1,
+                            output_label_training)
+    
+    
+    
+    combine_all_features_no_spider(pos_aaindex = paste0(output_label_training, "_noc_pos_cluster_matrix.Rds"),
+                         candi_aaindex = paste0(output_label_training, "_noc_candi_cluster_matrix.Rds"),
+                         pos_pssm = paste0(output_label_training, "_noc_pos_pssm_matrix.Rds"),
+                         candi_pssm = paste0(output_label_training, "_noc_candi_pssm_matrix.Rds"),
+                         output_label = output_label_training)
+    
+    #### for uncharted proteins, only divide into windows, not need to record the label 
+    
+    
+    ### think about this, only extract features 
+    window_formation_no_positive(ptm_site,flanking_size,
+                                 predict_not_na_sp_seq, predict_not_na_sp_uni_id,
+                                 output_label_predict)
+    ### the windows in the predition part are called "_predict.Rds"
+    
+    aaindex_feature_extraction(aaindex_cluster_order,
+                               paste0(output_label_predict,"_candidate.Rds"),
+                               flanking_size + 1,
+                               output_label_predict)
+    
+    
+    pssm_feature_extraction(paste0(output_label_predict,"_candidate.Rds"),
+                            paste0(output_label_training,"_pssm.Rds"),
+                            flanking_size + 1,
+                            output_label_predict)
+    
+    combine_all_features_no_spider(candi_aaindex = paste0(output_label_predict, "_noc_candi_cluster_matrix.Rds"),
+                         candi_pssm = paste0(output_label_predict, "_noc_candi_pssm_matrix.Rds"),
+                         output_label = output_label_predict)
+    
+    
+    
+    
+  }
   
-  aaindex_feature_extraction(aaindex_cluster_order,
-                             paste0(output_label_predict,"_candidate.Rds"),
-                             flanking_size + 1,
-                             output_label_predict)
-  
-  spider_feature_joining_without_mean(paste0(output_label_predict,"_candidate.Rds"),
-                                      "extracted_spider.Rds",
-                                      c(1,6,8,9),
-                                      c(8,9),
-                                      flanking_size + 1,  
-                                      output_label_predict)
-  
-  
-  pssm_feature_extraction(paste0(output_label_predict,"_candidate.Rds"),
-                          paste0(output_label_training,"_pssm.Rds"),
-                          flanking_size + 1,
-                          output_label_predict)
-  
-  combine_all_features(candi_aaindex = paste0(output_label_predict, "_noc_candi_cluster_matrix.Rds"),
-                       candi_spider = paste0(output_label_predict, "_noc_candi_structure_matrix.Rds"),
-                       candi_pssm = paste0(output_label_predict, "_noc_candi_pssm_matrix.Rds"),
-                       output_label = output_label_predict)
-
+ 
   }
 
 
@@ -434,6 +516,7 @@ present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
 #' 
 #' @param ptm_site The amino acid this PTM involves, in upper-case single letter representation.
 #' @param flanking_size The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
+#' @param SPIDER A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
 #' @param positive_info_file A text file containing the positive PTM sites info in required format.
 #' @param known_protein_fasta_file A fext file containing the proteins sequences of interest and known PTM sites in Fasta format.
 #' @param predict_protein_fasta_file A fext file containing the proteins sequences with PTM sites to be predicted in Fasta format.
@@ -454,6 +537,7 @@ present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
 #' @examples 
 #' predict_on_targeted_proteome = function (ptm_site = "S", 
 #'                                          flanking_size=12, 
+#'                                          SPIDER = T,
 #'                                          positive_info_file = "known_ps.tsv", 
 #'                                          known_protein_fasta_file = "known_fasta.tsv",
 #'                                          predict_protein_fasta_file = "predict_fasta.tsv",
@@ -471,6 +555,7 @@ present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
 
 
 predict_on_targeted_proteome = function (ptm_site, flanking_size=12, 
+                                         SPIDER = T,
                                          positive_info_file, 
                                          known_protein_fasta_file, predict_protein_fasta_file,
                                          output_label_training, output_label_predict,
@@ -485,6 +570,7 @@ predict_on_targeted_proteome = function (ptm_site, flanking_size=12,
   
   generate_feature_t(ptm_site = ptm_site,
                      flanking_size = flanking_size, 
+                     SPIDER = SPIDER,
                      positive_info_file = positive_info_file,
                      known_protein_fasta_file = known_protein_fasta_file,
                      predict_protein_fasta_file = predict_protein_fasta_file,
