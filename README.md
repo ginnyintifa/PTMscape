@@ -1,7 +1,16 @@
 
-[TOC]
+#Table of contents
+- [Installation] (#ids1)
+- [Functions] (#ids2)
+- [Input files] (#ids3)
+- [Input parameters] (#ids4)
+- [Reference score threshold] (#ids5)
+- [Example script] (#ids6)
+- [Output description] (#ids7)
 
 
+
+<div id = 'ids1'/>
 # 1.Installation
 
 `PTMscape` can be downloaded and installed in R with following code:
@@ -55,7 +64,7 @@ int check_probability_model(const struct model *model_)
 	
 ```
 
-
+<div id = 'ids2'/>
 # 2. Functions
 
 ### Predict PTM events
@@ -86,8 +95,8 @@ Negative crosstalk in a protein domain is defined as two types of PTM happening 
 Function `calculate_tbt_negative_ptms()` should be called. Input files and parameters will be described in the following sections.
 
 
-
-# 3.Source file preparation 
+<div id = 'ids3'/>
+# 3.Input files
 ### User provided input files
 
 * 1. Known PTM sites
@@ -113,8 +122,8 @@ Several files need to be downloaded from this [webpage](http://137.132.97.109:59
 
 Please download these files and put them in the same working directory where you installed `PTMscape`.
 
-
-# 4.Input parameter specification 
+<div id = 'ids4'/>
+# 4.Input parameters
 
 `PTMscape` requires several user specified parameters.
 
@@ -179,7 +188,7 @@ Please download these files and put them in the same working directory where you
 ```cross_mapped_df_Rds``` An Rds file containing the cross window score file with domain mapped.  
 ```output_label``` The string to tag the output files.  
 
-
+<div id = 'ids5'/>
 # 5.Reference score threshold derived from PhosphoSitePlus PTM data
 
 
@@ -197,7 +206,7 @@ Please download these files and put them in the same working directory where you
 
 
 
-
+<div id = 'ids6'/>
 # 6.Example script
 
 ### Whole proteom prediction
@@ -299,7 +308,7 @@ calculate_tbt_negative_ptms(anchor_mod = "methy_k",
                              output_label = "sample_methy_k_ubi_negtive")
 
 ```
-
+<div id = 'ids7'/>
 # 7.Output files description
 
 
