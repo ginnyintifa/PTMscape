@@ -54,21 +54,34 @@ int check_probability_model(const struct model *model_)
 ```
 
 
-# 2.Prediction mode choices.
+# 2. Functions
 
-### Whole proteome prediction mode.
+### Predict PTM events
+#### Whole proteome prediction
 
 In this mode, it is assumed that user wants to discover all possible PTM sites in proteins of interest. Known PTM sites will be mapped to all the proteins. Then the whole data will be divided into k folds as specified by the user. Each time (k-1) folds of the data will be used as training data to fit a linear SVM model, subsequently the rest one fold of the data will be predicted by the model trained. This process is conducted for k times so that each fold of the data will be predicted once by the rest data. Finally known PTM sites plus predicted PTM sites (at a specificity level set by the user) will be the positive PTM sites. 
 
-In this mode, user should call the function `predict_on_whole_proteome()`. Input files and parameters will be described in the following sections.
+Function `predict_on_whole_proteome()`. Input files and parameters will be described in the following sections.
 
-### Targeted prediction mode.
+#### Targeted prediction
 
 In this mode, it is assumed that user provides a set of reliable PTM sites and a Fasta file contaning associated protein seqeunces(i.e. User is confident about the positive/negative designation of PTM sites in these protein sequences). The aim is to predict PTM events in uncharted proteins sequences with model trained from the reliable set. After prediction, the score threshold of positive/negative site will be selected by either refering to the threshold derived from large dataset(provided by `PTMscape` tool) or conducting cross validation within the known data and select the cutoff corresponding to user specified specificity level.  
 
-In this mode, user should call the function `predict_on_targeted_proteome()`. Input files and parameters will be described in the following sections.
+Function `predict_on_targeted_proteome()` should be called. Input files and parameters will be described in the following sections.
 
+### PTM crosstalk analysis
 
+#### Positive crosstalk
+
+Positive crosstalk in a protein domain is defined as 2 PTMs happening on 2 residues which are near to each other. The distance between the two residues can be specified by the user. `PTMscape` takes the mapped files(these files are the output files of the predicting functions) of the two PTM types as input and perform fisher exact test to see if co-occurrence of PTMs are more frequent than expected. 
+
+Function `calculate_tbt_positive_ptms()` should be called. Input files and parameters will be described in the following sections.
+
+#### Negative crosstalk
+
+Negative crosstalk in a protein domain is defined as 2 PTMs happening on the same residue. The two PTM types may compete with each other for the chance of modifying the target site. `PTMscape` takes the mapped files(these files are the output files of the predicting functions) of the two PTM types as input and perform fisher exact test to see if competing  of two PTM events are more frequent than expected. 
+
+Function `calculate_tbt_negative_ptms()` should be called. Input files and parameters will be described in the following sections.
 
 
 
@@ -103,12 +116,13 @@ Please download these files and put them in the same working directory where you
 
 `PTMscape` requires several user specified parameters.
 
+### Predict PTM events.
 
-### Whole proteome prediction mode
+#### Whole proteome prediction
 
 ```ptm_site```  The amino acid this PTM involves, in upper-case single letter representation.  
 ```flanking_size``` The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.  
-```SPIDER``` A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
+```SPIDER``` A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.  
 ```positive_info_file```  A text file containing the positive PTM sites info in required format.  
 ```protein_fasta_file```  A fext file containing the proteins sequences of interest in Fasta format.  
 ```liblinear_dir``` Absolute path of Liblinear tool.  
@@ -121,13 +135,13 @@ Please download these files and put them in the same working directory where you
 ```output_label```  The string to tag the output files.  
 
 
-### Targeted prediction mode
+#### Targeted prediction
 
 
 
 ```ptm_site```  The amino acid this PTM involves, in upper-case single letter representation.  
 ```flanking_size``` The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.  
-```SPIDER``` A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
+```SPIDER``` A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.  
 ```positive_info_file```  A text file containing the positive PTM sites info in required format.  
 ```known_protein_fasta_file```  A fext file containing the proteins sequences of interest and known PTM sites in Fasta format.  
 ```predict_protein_fasta_file```  A fext file containing the proteins sequences with PTM sites to be predicted in Fasta format.  
@@ -144,9 +158,19 @@ Please download these files and put them in the same working directory where you
 
 
 
-### Crosstalk domain enrichment analysis
+### PTM crosstalk analysis
+
+#### Positive crosstalk
 
 ```distance``` A numerical value indicating distance between two PTM sites, defaul set to 5.  
+```anchor_mod``` A string indicating the anchor modification.  
+```cross_mod``` A string indicating the crosstalk modification.  
+```anchor_mapped_df_Rds``` An Rds file containing the achor window score file with domain mapped.  
+```cross_mapped_df_Rds``` An Rds file containing the cross window score file with domain mapped.  
+```output_label``` The string to tag the output files.  
+
+#### Negative crosstalk
+
 ```anchor_mod``` A string indicating the anchor modification.  
 ```cross_mod``` A string indicating the crosstalk modification.  
 ```anchor_mapped_df_Rds``` An Rds file containing the achor window score file with domain mapped.  
@@ -248,27 +272,27 @@ predict_on_targeted_proteome (ptm_site = "S",
 
 ### Crosstalk analysis
 
-Analyze positive crosstalk events between methylationK and phosphorylationS. The output file will be **methy_k_ps_positive_test.sv**. 
+Analyze positive crosstalk events between methylationK and phosphorylationS. The output file will be **sample_ps_ubi_positive_test.sv**. 
 
 
 ```{r, eval = F}
 
 calculate_tbt_positive_ptms(distance = 5,
-                        anchor_mod = "methy_k",
-                        cross_mod = "ps",
-                        anchor_mapped_df_Rds = "methy_k_80_mapped_df.Rds",
-                        cross_mapped_df_Rds = "ps_80_mapped_df.Rds",
-                        output_label = "methy_k_ps_positive")
+                        anchor_mod = "ps",
+                        cross_mod = "ubi",
+                        anchor_mapped_df_Rds = "sample_ps_mapped_df.Rds",
+                        cross_mapped_df_Rds = "sample_ubi_mapped_df.Rds",
+                        output_label = "sample_ps_ubi_positive")
 ```
 
-Analyze negative crosstalk events between ubiquitination and methylationK. The output will be **ubi_methy_k_negative.tsv**.
+Analyze negative crosstalk events between ubiquitination and methylationK. The output will be **sample_methy_k_ubi_negative.tsv**.
 
 ```{r, eval = F}
-calculate_tbt_negative_ptms(anchor_mod = "ubi",
-                             cross_mod = "methy_k",
-                             anchor_mapped_df_Rds = "ubi_wp_52_mapped_df.Rds",
-                             cross_mapped_df_Rds = "methy_k_80_mapped_df.Rds",
-                             output_label = "ubi_methy_k_negtive")
+calculate_tbt_negative_ptms(anchor_mod = "methy_k",
+                             cross_mod = "ubi",
+                             anchor_mapped_df_Rds = "sample_methy_k_mapped_df.Rds",
+                             cross_mapped_df_Rds = "sample_ubi_mapped_df.Rds",
+                             output_label = "sample_methy_k_ubi_negtive")
 
 ```
 
