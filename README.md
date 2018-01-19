@@ -10,8 +10,9 @@
 
 
 
+
 <div id = 'ids1'/>
-# 1.Installation
+## 1.Installation
 
 `PTMscape` can be downloaded and installed in R with following code:
 
@@ -65,7 +66,7 @@ int check_probability_model(const struct model *model_)
 ```
 
 <div id = 'ids2'/>
-# 2. Functions
+## 2. Functions
 
 ### Predict PTM events
 #### Whole proteome prediction
@@ -96,7 +97,7 @@ Function `calculate_tbt_negative_ptms()` should be called. Input files and param
 
 
 <div id = 'ids3'/>
-# 3.Input files
+## 3.Input files
 ### User provided input files
 
 * 1. Known PTM sites
@@ -123,7 +124,7 @@ Several files need to be downloaded from this [webpage](http://137.132.97.109:59
 Please download these files and put them in the same working directory where you installed `PTMscape`.
 
 <div id = 'ids4'/>
-# 4.Input parameters
+## 4.Input parameters
 
 `PTMscape` requires several user specified parameters.
 
@@ -189,7 +190,7 @@ Please download these files and put them in the same working directory where you
 ```output_label``` The string to tag the output files.  
 
 <div id = 'ids5'/>
-# 5.Reference score threshold derived from PhosphoSitePlus PTM data
+## 5.Reference score threshold derived from PhosphoSitePlus PTM data
 
 
 
@@ -207,7 +208,7 @@ Please download these files and put them in the same working directory where you
 
 
 <div id = 'ids6'/>
-# 6.Example script
+## 6.Example script
 
 ### Whole proteom prediction
 Predict acetylation in all the proteins provided. A 2-fold cross validation will be conducted. Score threshold will be determined at specificity level 0.99.Two text output files will be produced. **ps_samle_wp_mapped_df.tsv** and **ps_sample_wp_test.tsv**.
@@ -308,8 +309,9 @@ calculate_tbt_negative_ptms(anchor_mod = "methy_k",
                              output_label = "sample_methy_k_ubi_negtive")
 
 ```
+
 <div id = 'ids7'/>
-# 7.Output files description
+## 7.Output files description
 
 
 Basically, user can ignore all the `.Rds` files produced by the functions as they are used internally by the functions in this package. After the function finishes the runing process, the following `.tsv` files should be examined.
