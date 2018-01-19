@@ -1,15 +1,14 @@
 
 # Table of contents
-[Installation] (#ids1-a)
-- [Functions] (#ids2)
-- [Input files] (#ids3)
-- [Input parameters] (#ids4)
-- [Reference score threshold] (#ids5)
-- [Example script] (#ids6)
-- [Output description] (#ids7)
+- [Installation] (https://github.com/ginnyintifa/PTMscape#1installation)
+- [Functions] (https://github.com/ginnyintifa/PTMscape#2-functions)
+- [Input files] (https://github.com/ginnyintifa/PTMscape#3input-files)
+- [Input parameters] (https://github.com/ginnyintifa/PTMscape#4input-parameters)
+- [Reference score threshold] (https://github.com/ginnyintifa/PTMscape#5reference-score-threshold-derived-from-phosphositeplus-ptm-data)
+- [Example script] (https://github.com/ginnyintifa/PTMscape#6example-script)
+- [Output description] (https://github.com/ginnyintifa/PTMscape#7output-files-description)
 
 
-<a name = 'ids1-a'></a>
 ## 1.Installation
 
 `PTMscape` can be downloaded and installed in R with following code:
@@ -63,7 +62,6 @@ int check_probability_model(const struct model *model_)
 	
 ```
 
-<a name = 'ids2'></a>
 ## 2. Functions
 
 ### Predict PTM events
@@ -94,7 +92,6 @@ Negative crosstalk in a protein domain is defined as two types of PTM happening 
 Function `calculate_tbt_negative_ptms()` should be called. Input files and parameters will be described in the following sections.
 
 
-<a name = 'ids3'></a>
 ## 3.Input files
 ### User provided input files
 
@@ -121,7 +118,6 @@ Several files need to be downloaded from this [webpage](http://137.132.97.109:59
 
 Please download these files and put them in the same working directory where you installed `PTMscape`.
 
-<a name = 'ids4'></a>
 ## 4.Input parameters
 
 `PTMscape` requires several user specified parameters.
@@ -187,7 +183,6 @@ Please download these files and put them in the same working directory where you
 ```cross_mapped_df_Rds``` An Rds file containing the cross window score file with domain mapped.  
 ```output_label``` The string to tag the output files.  
 
-<a name = 'ids5'></a>
 ## 5.Reference score threshold derived from PhosphoSitePlus PTM data
 
 
@@ -205,7 +200,6 @@ Please download these files and put them in the same working directory where you
 
 
 
-<a name = 'ids6'></a>
 ## 6.Example script
 
 ### Whole proteom prediction
@@ -308,7 +302,6 @@ calculate_tbt_negative_ptms(anchor_mod = "methy_k",
 
 ```
 
-<a name = 'ids7'></a>
 ## 7.Output files description
 
 
