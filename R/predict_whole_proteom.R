@@ -3,10 +3,10 @@
 #' 
 #' This function generates feature data for whole proteome by mapping the positive PTM info to protein sequences, constructing windows and extracting 3 sets of features.
 #' @param ptm_site The amino acid this PTM involves, in upper-case single letter representation.
-#' @param flanking_size The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
+#' @param flanking_size The number of residues surrounding each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
 #' @param SPIDER A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
 #' @param positive_info_file A text file containing the positive PTM sites info in required format.
-#' @param protein_fasta_file A fext file containing the proteins sequences of interest in Fasta format.
+#' @param protein_fasta_file A text file containing the proteins sequences of interest in Fasta format.
 #' @param output_label The string to tag the output files.
 #' @import stringr dplyr magrittr data.table
 #' @export
@@ -397,10 +397,10 @@ present_prediction_wp = function(positive_index_file_names,
 
 #'  A function to predict and annotate whole proteom PTM sites
 #' @param ptm_site The amino acid this PTM involves, in upper-case single letter representation.
-#' @param flanking_size The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
+#' @param flanking_size The number of residues surrounding each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
 #' @param SPIDER A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
 #' @param positive_info_file A text file containing the positive PTM sites info in required format.
-#' @param protein_fasta_file A fext file containing the proteins sequences of interest in Fasta format.
+#' @param protein_fasta_file A text file containing the proteins sequences of interest in Fasta format.
 #' @param liblinear_dir Absolute peth of Liblinear tool.
 #' @param n_fold Number of folds used for training and prediction, default set to 2
 #' @param feature_file_path Absolute path of the feature files.

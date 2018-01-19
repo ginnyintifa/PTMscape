@@ -8,11 +8,11 @@
 #' 
 #' This function generates feature data for targeted by mapping the positive PTM info to protein sequences, constructing windows and extracting 3 sets of features.
 #' @param ptm_site The amino acid this PTM involves, in upper-case single letter representation.
-#' @param flanking_size The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
+#' @param flanking_size The number of residues surrounding each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
 #' @param SPIDER A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
 #' @param positive_info_file A text file containing the positive PTM sites info in required format.
-#' @param known_protein_fasta_file A fext file containing the proteins sequences of interest and known PTM sites in Fasta format.
-#' @param predict_protein_fasta_file A fext file containing the proteins sequences with PTM sites to be predicted in Fasta format.
+#' @param known_protein_fasta_file A text file containing the proteins sequences of interest and known PTM sites in Fasta format.
+#' @param predict_protein_fasta_file A text file containing the proteins sequences with PTM sites to be predicted in Fasta format.
 #' @param output_label_training The string to tag the output files associated with training proteins.
 #' @param output_label_predict The string to tag the output files associated with prediction proteins.
 #' @import stringr dplyr magrittr data.table
@@ -406,10 +406,10 @@ predict_with_liblinear = function(liblinear_dir,
 #' @param flag_for_score_threshold_chosen A string indicating whether use reference score threshold or get from the user supplied training data, defalt set to "reference".
 #' @param score_threshold A numerical value between 0 to 1 indicating the reference score threshold (supply when in "reference")
 #' @param ptm_site The amino acid this PTM involves, in upper-case single letter representation.
-#' @param flanking_size The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
+#' @param flanking_size The number of residues surrounding each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
 #' @param SPIDER A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
 #' @param positive_info_file A text file containing the positive PTM sites info in required format.
-#' @param known_protein_fasta_file A fext file containing the proteins sequences of interest and known PTM sites in Fasta format.
+#' @param known_protein_fasta_file A text file containing the proteins sequences of interest and known PTM sites in Fasta format.
 #' @param pred_candidate_df_Rds_name An Rds file containing the candidate data frame of the proteins to be predicted.
 #' @param pred_score_file_name     A text file containing the predicted score for the proteins of interest.   
 #' @param liblinear_dir Absolute path of Liblinear tool.
@@ -518,11 +518,11 @@ present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
 #' Predict on targeted proteome.
 #' 
 #' @param ptm_site The amino acid this PTM involves, in upper-case single letter representation.
-#' @param flanking_size The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
+#' @param flanking_size The number of residues surrounding each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.
 #' @param SPIDER A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
 #' @param positive_info_file A text file containing the positive PTM sites info in required format.
-#' @param known_protein_fasta_file A fext file containing the proteins sequences of interest and known PTM sites in Fasta format.
-#' @param predict_protein_fasta_file A fext file containing the proteins sequences with PTM sites to be predicted in Fasta format.
+#' @param known_protein_fasta_file A text file containing the proteins sequences of interest and known PTM sites in Fasta format.
+#' @param predict_protein_fasta_file A text file containing the proteins sequences with PTM sites to be predicted in Fasta format.
 #' @param output_label_training The string to tag the output files associated with training proteins.
 #' @param output_label_predict The string to tag the output files associated with prediction proteins.
 #' @param liblinear_dir Absolute path of Liblinear tool.
@@ -552,6 +552,7 @@ present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
 #'                                          feature_file_path = "/data/ginny/test_package/",
 #'                                          cvlog_path_name = "/data/ginny/test_package/cvlog.txt",
 #'                                          specificity_level = 0.99,
+#'                                          n_fold = 2,
 #'                                          flag_for_score_threshold_chosen = "cv",
 #'                                          score_threshold = NULL)
 

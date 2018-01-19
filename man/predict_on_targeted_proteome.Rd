@@ -14,15 +14,15 @@ predict_on_targeted_proteome(ptm_site, flanking_size = 12, SPIDER = T,
 \arguments{
 \item{ptm_site}{The amino acid this PTM involves, in upper-case single letter representation.}
 
-\item{flanking_size}{The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.}
+\item{flanking_size}{The number of residues surrounding each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.}
 
 \item{SPIDER}{A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.}
 
 \item{positive_info_file}{A text file containing the positive PTM sites info in required format.}
 
-\item{known_protein_fasta_file}{A fext file containing the proteins sequences of interest and known PTM sites in Fasta format.}
+\item{known_protein_fasta_file}{A text file containing the proteins sequences of interest and known PTM sites in Fasta format.}
 
-\item{predict_protein_fasta_file}{A fext file containing the proteins sequences with PTM sites to be predicted in Fasta format.}
+\item{predict_protein_fasta_file}{A text file containing the proteins sequences with PTM sites to be predicted in Fasta format.}
 
 \item{output_label_training}{The string to tag the output files associated with training proteins.}
 
@@ -67,6 +67,7 @@ predict_on_targeted_proteome = function (ptm_site = "S",
                                          feature_file_path = "/data/ginny/test_package/",
                                          cvlog_path_name = "/data/ginny/test_package/cvlog.txt",
                                          specificity_level = 0.99,
+                                         n_fold = 2,
                                          flag_for_score_threshold_chosen = "cv",
                                          score_threshold = NULL)
 }

@@ -18,7 +18,7 @@ present_prediction_t(flag_for_score_threshold_chosen = "reference",
 
 \item{ptm_site}{The amino acid this PTM involves, in upper-case single letter representation.}
 
-\item{flanking_size}{The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.}
+\item{flanking_size}{The number of residues surrounding each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.}
 
 \item{SPIDER}{A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.}
 
@@ -28,7 +28,7 @@ present_prediction_t(flag_for_score_threshold_chosen = "reference",
 
 \item{positive_info_file}{A text file containing the positive PTM sites info in required format.}
 
-\item{known_protein_fasta_file}{A fext file containing the proteins sequences of interest and known PTM sites in Fasta format.}
+\item{known_protein_fasta_file}{A text file containing the proteins sequences of interest and known PTM sites in Fasta format.}
 
 \item{n_fold}{Number of folds used for training and prediction, default set to 2}
 
