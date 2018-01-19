@@ -1,6 +1,6 @@
 
 # Table of contents
-- [Installation] (#ids1-a)
+[Installation] (#ids1-a)
 - [Functions] (#ids2)
 - [Input files] (#ids3)
 - [Input parameters] (#ids4)
