@@ -1,6 +1,6 @@
 
 # Table of contents
-- [Installation] (https://github.com/ginnyintifa/PTMscape#1installation)
+- [Installation](https://github.com/ginnyintifa/PTMscape#1installation)
 - [Functions] (https://github.com/ginnyintifa/PTMscape#2-functions)
 - [Input files] (https://github.com/ginnyintifa/PTMscape#3input-files)
 - [Input parameters] (https://github.com/ginnyintifa/PTMscape#4input-parameters)
