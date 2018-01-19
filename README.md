@@ -1,6 +1,6 @@
 
 # Table of contents
-- [Installation] (#ids1)
+- [Installation] (#ids1-a)
 - [Functions] (#ids2)
 - [Input files] (#ids3)
 - [Input parameters] (#ids4)
@@ -9,7 +9,7 @@
 - [Output description] (#ids7)
 
 
-<a name = 'ids1'></a>
+<a name = 'ids1-a'></a>
 ## 1.Installation
 
 `PTMscape` can be downloaded and installed in R with following code:
