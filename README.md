@@ -1,5 +1,5 @@
 
-#Table of contents
+# Table of contents
 - [Installation] (#ids1)
 - [Functions] (#ids2)
 - [Input files] (#ids3)
