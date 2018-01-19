@@ -108,6 +108,7 @@ Please download these files and put them in the same working directory where you
 
 ```ptm_site```  The amino acid this PTM involves, in upper-case single letter representation.  
 ```flanking_size``` The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.  
+```SPIDER``` A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
 ```positive_info_file```  A text file containing the positive PTM sites info in required format.  
 ```protein_fasta_file```  A fext file containing the proteins sequences of interest in Fasta format.  
 ```liblinear_dir``` Absolute path of Liblinear tool.  
@@ -126,6 +127,7 @@ Please download these files and put them in the same working directory where you
 
 ```ptm_site```  The amino acid this PTM involves, in upper-case single letter representation.  
 ```flanking_size``` The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.  
+```SPIDER``` A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.
 ```positive_info_file```  A text file containing the positive PTM sites info in required format.  
 ```known_protein_fasta_file```  A fext file containing the proteins sequences of interest and known PTM sites in Fasta format.  
 ```predict_protein_fasta_file```  A fext file containing the proteins sequences with PTM sites to be predicted in Fasta format.  
@@ -202,6 +204,7 @@ Know phosphoS sites and proteins are used to train a linear SVM model. Select sc
 ```{r, eval=F}
 predict_on_targeted_proteome (ptm_site = "S", 
                               flanking_size=12, 
+                              SPIDER = T,
                               positive_info_file = "sample_known_ps.tsv", 
                               known_protein_fasta_file = "sample_known_fasta.tsv",
                               predict_protein_fasta_file = "sample_predict_fasta.tsv",
@@ -225,6 +228,7 @@ Select score threshold by cross validating within known PTM sites. Score thresho
 ```{r, eval=F}
 predict_on_targeted_proteome (ptm_site = "S", 
                               flanking_size=12, 
+                              SPIDER = T,
                               positive_info_file = "sample_known_ps.tsv", 
                               known_protein_fasta_file = "sample_known_fasta.tsv",
                               predict_protein_fasta_file = "sample_predict_fasta.tsv",

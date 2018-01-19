@@ -567,6 +567,7 @@ predict_on_targeted_proteome = function (ptm_site, flanking_size=12,
                                          feature_file_path,
                                          cvlog_path_name,
                                          specificity_level,
+                                         n_fold = 2,
                                          flag_for_score_threshold_chosen = "reference",
                                          score_threshold)
 {

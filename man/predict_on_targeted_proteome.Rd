@@ -8,8 +8,8 @@ predict_on_targeted_proteome(ptm_site, flanking_size = 12, SPIDER = T,
   positive_info_file, known_protein_fasta_file, predict_protein_fasta_file,
   output_label_training, output_label_predict, lower_bound = -1,
   upper_bound = 1, liblinear_dir, feature_file_path, cvlog_path_name,
-  specificity_level, flag_for_score_threshold_chosen = "reference",
-  score_threshold)
+  specificity_level, n_fold = 2,
+  flag_for_score_threshold_chosen = "reference", score_threshold)
 }
 \arguments{
 \item{ptm_site}{The amino acid this PTM involves, in upper-case single letter representation.}
@@ -40,11 +40,11 @@ predict_on_targeted_proteome(ptm_site, flanking_size = 12, SPIDER = T,
 
 \item{specificity_level}{A numerical number indicating the specificity user requires the classifier to achieve, default set to 0.99. Used only not in "reference" mode.}
 
+\item{n_fold}{Number of folds used for training and prediction, default set to 2}
+
 \item{flag_for_score_threshold_chosen}{A string indicating whether use reference score threshold or get from the user supplied training data, defalt set to "reference".}
 
 \item{score_threshold}{A numerical value between 0 to 1 indicating the reference score threshold (supply when in "reference")}
-
-\item{n_fold}{Number of folds used for training and prediction, default set to 2}
 }
 \description{
 Predict on targeted proteome.
