@@ -472,7 +472,7 @@ present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
                                     protein_fasta_file = known_protein_fasta_file,
                                     output_label = paste0(output_label, "_known_cv"))
     
-    generate_training_test_data_whole_proteome(n_fold = n_fold, 
+    generate_training_test_data_wp(n_fold = n_fold, 
                                                lower_bound = lower_bound,
                                                upper_bound = upper_bound,
                                                positive_feature_file = paste0(output_label,"_known_cv",
