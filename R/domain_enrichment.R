@@ -460,12 +460,16 @@ calculate_tbt_negative_ptms = function(anchor_mod,
     or[i] = ft$estimate
   }
   
+  qv = qvalue(p = fisher_p)
+  
   tbt_p = get_tbt %>%
     dplyr::mutate(fisher_pvalue = fisher_p)%>%
     dplyr::mutate(odds_ratio = or)%>%
+    dplyr::mutate(qvalue = qv$qvalues)%>%
+    dplyr::mutate(adjusted_odds_ratio = adjusted_or)%>%
     dplyr::arrange(fisher_pvalue)
   
-  
+
   
   write.table(tbt_p, paste0(output_label, "_test.tsv"),
               quote = F, row.names = F, sep = "\t")
