@@ -448,6 +448,8 @@ calculate_tbt_negative_ptms = function(anchor_mod,
   ### calculate fisher's exact test on this
   fisher_p = rep(0, nrow(get_tbt))
   or = rep(0, nrow(get_tbt))
+  adjusted_or = rep(0,nrow(get_tbt))
+  
   
   for(i in 1:nrow(get_tbt))
   {
@@ -458,6 +460,8 @@ calculate_tbt_negative_ptms = function(anchor_mod,
     
     fisher_p[i] = ft$p.value
     or[i] = ft$estimate
+    adjusted_or[i] = (get_tbt[i,2]+0.5)*(get_tbt[i,5]+0.5)/(get_tbt[i,3]+0.5)/(get_tbt[i,4]+0.5)
+    
   }
   
   qv = qvalue(p = fisher_p)
