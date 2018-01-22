@@ -491,7 +491,7 @@ predict_on_whole_proteome = function(ptm_site,
   PTM_domain_mapping_enrichment(window_score_label_Rds = paste0(output_label,"_window_score_df.Rds"), 
                                 output_label = output_label)
 
-  cat("STEP5:Domain mapped and annotated", "\n")
+  cat("STEP5:Domain mapped and annotated.", "\n")
   cat("Finished!","\n")
 }
 

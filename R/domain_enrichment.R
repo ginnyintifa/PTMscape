@@ -4,7 +4,7 @@
 #' Map sites to protein domains and analyse the enrichment of PTM sites for each domain.
 #' @param window_score_label_Rds An Rds file containing the window, positive and score of interested sites(genereated from present_predict_wp()).
 #' @param output_label The string to tag the output files.
-#' @import stringr dplyr magrittr qvalue data.table
+#' @import stringr dplyr magrittr data.table
 #' @export
 #' @examples
 #' PTM_domain_mapping_enrichment(window_score_label_Rds = "ps_0103_window_score_df.Rds",
@@ -37,7 +37,7 @@ output_label)
 #' @param anchor_mapped_df_Rds An Rds file containing the window score file of anchor PTM mapped domain.  
 #' @param cross_mapped_df_Rds An Rds file containing the window score file of the other PTM with mapped domain.
 #' @param output_label The string to tag the output files.
-#' @import stringr dplyr magrittr qvalue data.table
+#' @import stringr dplyr magrittr data.table
 #' @export
 #' @examples
 #' calculate_tbt_positive_ptms(distance = 5,
@@ -263,12 +263,12 @@ calculate_tbt_positive_ptms = function(distance = 5,
     
   }
   
-  qv = qvalue(p = fisher_p)
+  #qv = qvalue(p = fisher_p)
   
   tbt_p = get_tbt %>%
     dplyr::mutate(fisher_pvalue = fisher_p)%>%
     dplyr::mutate(odds_ratio = or)%>%
-    dplyr::mutate(qvalue = qv$qvalues)%>%
+    #dplyr::mutate(qvalue = qv$qvalues)%>%
     dplyr::mutate(adjusted_odds_ratio = adjusted_or)%>%
     dplyr::arrange(fisher_pvalue)
   
@@ -292,7 +292,7 @@ calculate_tbt_positive_ptms = function(distance = 5,
 #' @param anchor_mapped_df_Rds An Rds file containing the window score file of anchor PTM mapped domain.  
 #' @param cross_mapped_df_Rds An Rds file containing the window score file of the other PTM with mapped domain.
 #' @param output_label The string to tag the output files.
-#' @import stringr dplyr magrittr qvalue data.table
+#' @import stringr dplyr magrittr data.table
 #' @export
 #' @examples
 #' calculate_tbt_negative_ptms(anchor_mod = "ubi",
@@ -464,12 +464,12 @@ calculate_tbt_negative_ptms = function(anchor_mod,
     
   }
   
-  qv = qvalue(p = fisher_p)
+ # qv = qvalue(p = fisher_p)
   
   tbt_p = get_tbt %>%
     dplyr::mutate(fisher_pvalue = fisher_p)%>%
     dplyr::mutate(odds_ratio = or)%>%
-    dplyr::mutate(qvalue = qv$qvalues)%>%
+    #dplyr::mutate(qvalue = qv$qvalues)%>%
     dplyr::mutate(adjusted_odds_ratio = adjusted_or)%>%
     dplyr::arrange(fisher_pvalue)
   

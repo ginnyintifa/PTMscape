@@ -11,16 +11,7 @@
 
 ## 1.Installation
 
-`PTMscape` can be downloaded and installed in R as follows. As a prerequisite, `qvalue` package from `bioconductor` must be installed:
-
-```{r, eval = F}
-
-source("https://bioconductor.org/biocLite.R")
-biocLite("qvalue")
-
-```
-
-In addition, `devtools` must also be installed.
+`PTMscape` can be downloaded and installed in R as follows. As a prerequisite, `devtools` must be installed:
 
 ```{r, eval = F}
 install.packages("devtools")

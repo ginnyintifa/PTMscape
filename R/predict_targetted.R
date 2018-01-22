@@ -420,7 +420,7 @@ predict_with_liblinear = function(liblinear_dir,
 #' @param cvlog_path_name The path and name of the log files, which hold the details of Liblinear procedures.
 #' @param specificity_level A numerical number indicating the specificity user requires the classifier to achieve, default set to 0.99. Used only not in "reference" mode.
 #' @param output_label The string to tag the output files in threshold getting purpose.
-#' @import stringr dplyr magrittr qvalue data.table
+#' @import stringr dplyr magrittr data.table
 #' @export
 #' @examples 
 #' present_prediction_t(flag_for_score_threshold_chosen = "cv",
@@ -534,7 +534,7 @@ present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
 #' @param specificity_level  A number ranges from 0 to 1 indicating the specificity user requires the classifier to achieve (default to 0.99).
 #' @param flag_for_score_threshold_chosen A string indicating whether use reference score threshold or get from the user supplied training data (default set to "reference").  
 #' @param score_threshold A numerical value between 0 to 1 indicating the reference score threshold (required in "reference" mode).
-#' @import stringr dplyr magrittr qvalue data.table
+#' @import stringr dplyr magrittr data.table
 #' @export
 #' @details This function outputs the features generated from input files.
 #' @examples 
@@ -628,8 +628,10 @@ predict_on_targeted_proteome = function (ptm_site, flanking_size=12,
   
   PTM_domain_mapping_enrichment(window_score_label_Rds = paste0(output_label_predict,"_window_score_df.Rds"), 
                                 output_label = output_label_predict)
-  cat("STEP5: Domain mapped and annotated", "\n")
+  cat("STEP5: Domain mapped and annotated.", "\n")
   cat("Finished!","\n")
 }
-                                         
-                                         
+          
+
+
+

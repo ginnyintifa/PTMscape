@@ -2104,13 +2104,13 @@ calculate_tbt_single_ptm = function(mapped_window_score_label_Rds,
     
   }
   
-  qv = qvalue(p = chisq_p)
+ # qv = qvalue(p = chisq_p)
   
   
   tbt_p = output_df %>%
     dplyr::mutate(chisq_pvalue = chisq_p)%>%
     dplyr::mutate(odds_ratio = or)%>%
-    dplyr::mutate(qvalue = qv$qvalues)%>%
+    #dplyr::mutate(qvalue = qv$qvalues)%>%
     dplyr::mutate(adjusted_odds_ratio = adjusted_or)%>%
     dplyr::arrange(chisq_pvalue)
   
