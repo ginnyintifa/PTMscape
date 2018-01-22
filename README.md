@@ -6,15 +6,12 @@
 - [Input parameters](https://github.com/ginnyintifa/PTMscape#4input-parameters)
 - [Reference score threshold](https://github.com/ginnyintifa/PTMscape#5reference-score-threshold-derived-from-phosphositeplus-ptm-data)
 - [Example script](https://github.com/ginnyintifa/PTMscape#6example-script)
-- [Output description](https://github.com/ginnyintifa/PTMscape#7output-files-description)
+- [Description of output files](https://github.com/ginnyintifa/PTMscape#7output-files-description)
 
 
 ## 1.Installation
 
-`PTMscape` can be downloaded and installed in R with following code:
-
-
-Installation of `qvalue` from `bioconductor` is required:
+`PTMscape` can be downloaded and installed in R as follows. As a prerequisite, `qvalue` package from `bioconductor` must be installed:
 
 ```{r, eval = F}
 
@@ -23,13 +20,13 @@ biocLite("qvalue")
 
 ```
 
-If `devtools` is not installed:
+In addition, `devtools` must also be installed.
 
 ```{r, eval = F}
 install.packages("devtools")
 ```
 
-Install `PTMscape`:
+Next, install `PTMscape`:
 
 ```{r, eval = F}
 
@@ -40,8 +37,7 @@ library(PTMscape)
 ```
 
 
-`PTMscape` requires installation of `Liblinear` library, it can be downloaded from [Liblinear website](https://www.csie.ntu.edu.tw/~cjlin/liblinear/). After installation of `Liblinear` on your machine, a small [change](https://www.csie.ntu.edu.tw/~cjlin/liblinear/FAQ.html#training_and_prediction) of source code in the file linear.cpp(see below) is required so as to activate probability outputs for SVM.
-
+Finally, `PTMscape` requires installation of `Liblinear` library, which can be downloaded from [Liblinear website](https://www.csie.ntu.edu.tw/~cjlin/liblinear/). After installation of `Liblinear`, a small [change](https://www.csie.ntu.edu.tw/~cjlin/liblinear/FAQ.html#training_and_prediction) of source code in the file `linear.cpp` (see below) is required so as to produce probability score for SVM prediction.
 
 
 ```
@@ -61,35 +57,36 @@ int check_probability_model(const struct model *model_)
 	return 1;
 	
 ```
+Note: we provide a modified version of `linear.cpp` in the repository.
 
 ## 2. Functions
 
-### Predict PTM events
-#### Whole proteome prediction
+### Prediction of  PTM events
+#### Whole proteome scale prediction
 
-In this mode, it is assumed that user wants to discover all possible PTM sites in proteins of interest. Known PTM sites will be mapped to all the proteins. Then the whole data will be divided into k folds as specified by the user. Each time (k-1) folds of the data will be used as training data to fit a linear SVM model, subsequently the rest one fold of the data will be predicted by the model trained. This process is conducted for k times so that each fold of the data will be predicted once by the rest data. Finally known PTM sites plus predicted PTM sites (at a specificity level set by the user) will be the positive PTM sites. 
+In this mode of analysis, it is assumed that the user wants to discover all possible PTM sites in proteins of interest. Position information of known PTM sites will be mapped to all proteins. Then the whole data will be divided into k folds as specified by the user. Each time (k-1) folds of the data will be used as training data to fit a linear SVM model, and subsequently the remaining one fold of the data will be predicted by the model trained. This process is repeated for k times so that each fold of the data will be predicted once by the rest of the data. Finally known PTM sites and predicted PTM sites (at a specificity level set by the user) will be the regarded as positive PTM sites. 
 
-Function `predict_on_whole_proteome()` should be called. Input files and parameters will be described in the following sections.
+For this analysis, the function `predict_on_whole_proteome()` should be called. Input files and parameters are described below.
 
 #### Targeted prediction
 
-In this mode, it is assumed that user provides a set of reliable PTM sites and a Fasta file contaning associated protein seqeunces(i.e. User is confident about the positive/negative designation of PTM sites in these protein sequences). The aim is to predict PTM events in uncharted proteins sequences with model trained from the reliable set. After prediction, the score threshold of positive/negative site will be selected by either refering to the threshold derived from large dataset(provided by `PTMscape` tool, see the chart below) or conducting cross validation within the reliable data and select the cutoff corresponding to user specified specificity level.  
+In this mode of analysis, it is assumed that the user provides a set of reliable PTM sites and a fasta file containing associated protein sequences i.e. yser is confident about the positive/negative designation of PTM sites in these protein sequences). The aim here is to predict PTM events in previously uncharted proteins sequences with model trained from the reliable set. After prediction, the score threshold of positive/negative site will be selected by either refering to the threshold derived from large dataset (provided by `PTMscape` tool, see the chart below) or by conducting cross validation within the reliable data and select the cutoff corresponding to user specified specificity level.  
 
-Function `predict_on_targeted_proteome()` should be called. Input files and parameters will be described in the following sections.
+For this mode of analysis, the function `predict_on_targeted_proteome()` should be called. Input files and parameters are described in the following sections.
 
 ### PTM crosstalk analysis
 
 #### Positive crosstalk
 
-Positive crosstalk in a protein domain is defined as two types of PTM happening on two residues which are near to each other (on the same protein). The distance between the two residues can be specified by the user. `PTMscape` takes the mapped files(these files are the output files of the predicting functions) of the two PTM types as input and perform fisher exact test to see if co-occurrence of PTMs are more frequent than expected. 
+Positive crosstalk in a protein domain is defined as two types of PTM occurring on two residues close to one another (e.g. 5AA apart). The distance between the two residues can be specified by the user. `PTMscape` takes the mapped files (these files are the output files of the prediction functions) of the two PTM types as input and performs Fisher exact test to see whether the frequency of co-occurrence of PTMs is higher than expected. 
 
-Function `calculate_tbt_positive_ptms()` should be called. Input files and parameters will be described in the following sections.
+The function `calculate_tbt_positive_ptms()` should be called for this analysis. Input files and parameters are described in the following sections.
 
 #### Negative crosstalk
 
-Negative crosstalk in a protein domain is defined as two types of PTM happening on the same residue. The two PTM types may compete with each other for the chance of modifying the target site. `PTMscape` takes the mapped files(these files are the output files of the predicting functions) of the two PTM types as input and perform fisher exact test to see if competing  of two PTM events are more frequent than expected. 
+Negative crosstalk in a protein domain is defined as two types of PTM occurring on the same residue. The two PTM types may compete with each other for the chance of modifying the target site. `PTMscape` takes the mapped files (these files are the output files of the prediction functions) of the two PTM types as input and performs Fisher exact test to see whether the frequency of co-occurrence of PTMs is higher than expected. 
 
-Function `calculate_tbt_negative_ptms()` should be called. Input files and parameters will be described in the following sections.
+The function `calculate_tbt_negative_ptms()` should be called for this analysis. Input files and parameters are described in the following sections.
 
 
 ## 3.Input files
@@ -97,70 +94,72 @@ Function `calculate_tbt_negative_ptms()` should be called. Input files and param
 
 * 1. Known PTM sites
 
-User has to provide the Uniprot accession ID of proteins and position of the PTM sites in required format. See **sample_known_ps.tsv**.
+User has to provide the Uniprot accession ID of proteins and position of the PTM sites in the required format. See **sample_known_ps.tsv**.
 
 * 2. Fasta file for proteins of interest
 
-In whole proteome prediction mode, only one Fasta file is required. In targeted prediction mode, two Fasta files are needed. One consists proteins containing the reliable PTM sites information, the other consists protein sequences from which PTM sites are to be predicted. The format can be learned from **sample_known_fasta.tsv** and **sample_predict_fasta.tsv**.
+In the whole proteome scale prediction mode, only one fasta file is required. In targeted prediction mode, two fasta files are needed. One consists proteins containing the reliable PTM sites information, and the other consists protein sequences from which PTM sites are to be predicted. See the sample data: **sample_known_fasta.tsv** and **sample_predict_fasta.tsv**.
 
 ### PTMscape provided input files
 
-Several files need to be downloaded from this [webpage](http://137.132.97.109:59739/CSSB_LAB/) before running `PTMscape`.
+Several files need to be downloaded from the following [webpage](http://137.132.97.109:59739/CSSB_LAB/) before running `PTMscape`:
 
 
 
 * 1.  Clustered AAindex parameters in **aaindex_cluster_order.tsv**.  
-* 2.  Extracted SPIDER3 position specific structural features for the whole eligible Swiss-prot human proteome in **extract_spider.Rds** (this file is applicable when flanking size is set to 12, we also provide **extracted_spider_7.Rds** and **extracted_spider_5.Rds** for flanking size 7 and 5 respectively).   
-* 3.  File **spider_protID.tsv** is needed in feature extraction step, it contains all the Uniprot accession IDs of proteins for which SPIDER3 features are extractable.
-* 4.  File **domain_df_pure.Rds** contains domain specifications compiled from Pfam tool.  
-* 5.  Subcellular locations of each protein is in file **subcellusr_location_df_pure.Rds**, the information is retrieved from the database called COMPARTMENTS.
+* 2.  Extracted SPIDER3 position specific structural features for the whole eligible Swiss-prot human proteome in **extract_spider.Rds** (this file is applicable when flanking size is set to 12 (window size 25). We also provide **extracted_spider_7.Rds** and **extracted_spider_5.Rds** for window size 15 and 11 respectively).   
+* 3.  **spider_protID.tsv** is needed in the feature extraction step. It contains all the Uniprot accession IDs of proteins, for which SPIDER3 features can be extracted.
+* 4.  **domain_df_pure.Rds** contains domain specifications compiled from the `Pfam` tool.  
+* 5.  Subcellular locations of each protein is in the file named **subcellusr_location_df_pure.Rds**, the information is retrieved from the database called `COMPARTMENTS`.
 
 
-Please download these files and put them in the same working directory where you installed `PTMscape`.
+Download these files and put them in the same working directory where you installed `PTMscape`.
 
 ## 4.Input parameters
 
 `PTMscape` requires several user specified parameters.
 
-### Predict PTM events.
+### Prediction of  PTM events.
 
 #### Whole proteome prediction
 
-```ptm_site```  The amino acid this PTM involves, in upper-case single letter representation.  
-```flanking_size``` The number of residues surrounding each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.  
-```SPIDER``` A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.  
-```positive_info_file```  A text file containing the positive PTM sites info in required format.  
-```protein_fasta_file```  A text file containing the proteins sequences of interest in Fasta format.  
-```liblinear_dir``` Absolute path of Liblinear tool.  
-```n_fold```  Number of folds used for training and prediction, default set to 2.  
-```feature_file_path``` Absolute path of the feature files.  
-```lower_bound``` The lower bound of the scaled data range, default to -1.  
-```upper_bound``` The upper bound of the scaled data range, default to 1.  
+```ptm_site```  The target amino acid of the given PTM type, in upper-case single letter representation.  
+```flanking_size``` The number of residues surrounding each side of the center residue, The total window size will be 2*flanking_size+1 (default to 12).  
+```SPIDER``` A boolean variable indicating whether to use SPIDER3 features (default set to TRUE.)  
+```positive_info_file```  A text file containing the positive PTM sites in the required format.  
+```protein_fasta_file```  A text file containing the protein sequences of interest in fasta format.  
+```liblinear_dir``` The path for the Liblinear tool.  
+```n_fold``` The number of folds used for training and prediction in cross validation stage (default set to 2).  
+```feature_file_path``` The path for the feature files.  
+```lower_bound``` The lower bound of the scaled data range (default to -1).  
+```upper_bound``` The upper bound of the scaled data range (default to 1).  
 ```cvlog_path_name``` The path and name of the log files, which hold the details of Liblinear procedures.  
-```specificity_level``` A number ranges from 0 to 1 indicating the specificity user requires the classifier to achieve, default set to 0.99.  
+```specificity_level``` A number ranges from 0 to 1 indicating the specificity user requires the classifier to achieve (default to 0.99).  
 ```output_label```  The string to tag the output files.  
 
 
 #### Targeted prediction
 
 
-
-```ptm_site```  The amino acid this PTM involves, in upper-case single letter representation.  
-```flanking_size``` The number of residues surround each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.  
-```SPIDER``` A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.  
-```positive_info_file```  A text file containing the positive PTM sites info in required format.  
-```known_protein_fasta_file```  A text file containing the proteins sequences of interest and known PTM sites in Fasta format.  
-```predict_protein_fasta_file```  A text file containing the proteins sequences with PTM sites to be predicted in Fasta format.  
+```ptm_site```  The target amino acid of the given PTM type, in upper-case single letter representation.  
+```flanking_size``` The number of residues surrounding each side of the center residue, The total window size will be 2*flanking_size+1 (default to 12).  
+```SPIDER``` A boolean variable indicating whether to use SPIDER3 features (default set to TRUE.)  
+```positive_info_file```  A text file containing the positive PTM sites in the required format.  
+```protein_fasta_file```  A text file containing the protein sequences of interest in fasta format. 
+```known_protein_fasta_file```  A text file containing the proteins sequences of interest and known PTM sites in fasta format.  
+```predict_protein_fasta_file```  A text file containing the proteins sequences with PTM sites to be predicted in fasta format.  
 ```output_label_training``` The string to tag the output files associated with training proteins.  
-```output_label_predict```  The string to tag the output files associated with prediction proteins.  
-```liblinear_dir``` Absolute path of Liblinear tool.  
-```n_fold```  Number of folds used for training and prediction, default set to 2.  
-```feature_file_path``` Absolute path of the feature files.  
-```lower_bound``` The lower bound of the scaled data range, default to -1.  
-```upper_bound``` The upper bound of the scaled data range, default to 1.  
-```cvlog_path_name``` The path and name of the log files, which hold the details of Liblinear procedures.  ```specificity_level``` A number between 0 and 1 indicating the specificity user requires the classifier to achieve, default set to 0.99. Used only not in "reference" mode.  
-```flag_for_score_threshold_chosen``` A string indicating whether use reference score threshold or get from the user supplied training data, default set to "reference".  
+```output_label_predict```  The string to tag the output files associated with prediction proteins.   
+```liblinear_dir``` The path for the Liblinear tool.  
+```n_fold``` The number of folds used for training and prediction in cross validation stage (default set to 2).  
+```feature_file_path``` The path for the feature files.  
+```lower_bound``` The lower bound of the scaled data range (default to -1).  
+```upper_bound``` The upper bound of the scaled data range (default to 1).  
+```cvlog_path_name``` The path and name of the log files, which hold the details of Liblinear procedures.  
+```specificity_level``` A number ranges from 0 to 1 indicating the specificity user requires the classifier to achieve (default to 0.99).  
+```flag_for_score_threshold_chosen``` A string indicating whether use reference score threshold or get from the user supplied training data (default set to "reference").  
 ```score_threshold``` A numerical value between 0 to 1 indicating the reference score threshold (required in "reference" mode).  
+
 
 
 
@@ -168,19 +167,19 @@ Please download these files and put them in the same working directory where you
 
 #### Positive crosstalk
 
-```distance``` A numerical value indicating distance between two PTM sites, defaul set to 5.  
+```distance``` A numerical value indicating distance between two PTM sites (default to 5).  
 ```anchor_mod``` A string indicating the anchor modification.  
-```cross_mod``` A string indicating the crosstalk modification.  
-```anchor_mapped_df_Rds``` An Rds file containing the achor window score file with domain mapped.  
-```cross_mapped_df_Rds``` An Rds file containing the cross window score file with domain mapped.  
+```cross_mod``` A string indicating the other modification.  
+```anchor_mapped_df_Rds``` An Rds file containing the window score file of anchor PTM mapped domain.  
+```cross_mapped_df_Rds``` An Rds file containing the window score file of the other PTM with mapped domain.  
 ```output_label``` The string to tag the output files.  
 
 #### Negative crosstalk
 
 ```anchor_mod``` A string indicating the anchor modification.  
-```cross_mod``` A string indicating the crosstalk modification.  
-```anchor_mapped_df_Rds``` An Rds file containing the achor window score file with domain mapped.  
-```cross_mapped_df_Rds``` An Rds file containing the cross window score file with domain mapped.  
+```cross_mod``` A string indicating the other modification in competition with the anchor modification.  
+```anchor_mapped_df_Rds``` An Rds file containing the window score file of anchor PTM mapped domain.  
+```cross_mapped_df_Rds``` An Rds file containing the window score file of the other PTM with mapped domain.  
 ```output_label``` The string to tag the output files.  
 
 ## 5.Reference score threshold derived from PhosphoSitePlus PTM data
@@ -203,7 +202,7 @@ Please download these files and put them in the same working directory where you
 ## 6.Example script
 
 ### Whole proteom prediction
-Predict acetylation in all the proteins provided. A 2-fold cross validation will be conducted. Score threshold will be determined at specificity level 0.99.Two text output files will be produced. **ps_samle_wp_mapped_df.tsv** and **ps_sample_wp_test.tsv**.
+Let us assume that we predict lysine acetylation on all proteins provided. A two-fold cross validation will be conducted. Score threshold will be determined at specificity level 0.99. Two text output files will be produced: **ps_samle_wp_mapped_df.tsv** and **ps_sample_wp_test.tsv**.
 
 ```{r, eval=F}
 
@@ -227,7 +226,7 @@ predict_on_whole_proteome(ptm_site = "S",
 
 ### Targeted prediction
 
-Know phosphoS sites and proteins are used to train a linear SVM model. Select score threshold by cross validating within known PTM sites. A score corresponding to specificity 0.99 will be chosen as the threshold. Two text output files will be produced. **ps_sample_predict_mapped_df.tsv** and **ps_sample_predict_test.tsv**.
+Known phosphoS sites and proteins are used to train a linear SVM model. Select a score threshold by cross validating within known PTM sites. The score corresponding to specificity 0.99 will be chosen as the threshold. Two text output files will be produced: **ps_sample_predict_mapped_df.tsv** and **ps_sample_predict_test.tsv**.
 
 ```{r, eval=F}
 predict_on_targeted_proteome (ptm_site = "S", 
@@ -252,7 +251,7 @@ predict_on_targeted_proteome (ptm_site = "S",
 
 
 
-Select score threshold by cross validating within known PTM sites. Score threshold is chosen by looking up to the reference table
+Select a score threshold by looking up to the reference table.
 
 ```{r, eval=F}
 predict_on_targeted_proteome (ptm_site = "S", 
@@ -278,7 +277,7 @@ predict_on_targeted_proteome (ptm_site = "S",
 
 ### Crosstalk analysis
 
-Analyze positive crosstalk events between methylationK and phosphorylationS. The output file will be **sample_ps_ubi_positive_test.sv**. 
+Let us assume that we analyze positive crosstalk events between methylationK and phosphorylationS. The output file will be **sample_ps_ubi_positive_test.sv**. 
 
 
 ```{r, eval = F}
@@ -291,7 +290,7 @@ calculate_tbt_positive_ptms(distance = 5,
                         output_label = "sample_ps_ubi_positive")
 ```
 
-Analyze negative crosstalk events between ubiquitination and methylationK. The output will be **sample_methy_k_ubi_negative.tsv**.
+Meanwhile, this time we analyze negative crosstalk events between ubiquitination and methylationK. The output will be **sample_methy_k_ubi_negative.tsv**.
 
 ```{r, eval = F}
 calculate_tbt_negative_ptms(anchor_mod = "methy_k",
@@ -302,15 +301,15 @@ calculate_tbt_negative_ptms(anchor_mod = "methy_k",
 
 ```
 
-## 7.Output files description
+## 7.Description of output files.
 
 
-Basically, user can ignore all the `.Rds` files produced by the functions as they are used internally by the functions in this package. After the function finishes the runing process, the following `.tsv` files should be examined.
+The user can ignore all the `.Rds` files produced by the functions as they are used internally by the functions in this package. After the function finishes the runing process, the following `.tsv` files should be examined:
 
 
 **output_label_mapped_df.tsv** contains the predicted score for each modifiable site in proteins given.
 
-**output_label_test.tsv** contains the significance score for each domain where the PTM takes place. 
+**output_label_test.tsv** contains the significance score of enrichment for each domain where the PTM takes place. 
 
 
 

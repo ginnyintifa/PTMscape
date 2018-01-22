@@ -12,39 +12,39 @@ predict_on_targeted_proteome(ptm_site, flanking_size = 12, SPIDER = T,
   flag_for_score_threshold_chosen = "reference", score_threshold)
 }
 \arguments{
-\item{ptm_site}{The amino acid this PTM involves, in upper-case single letter representation.}
+\item{ptm_site}{The target amino acid of the given PTM type, in upper-case single letter representation.}
 
-\item{flanking_size}{The number of residues surrounding each side of the center residue, the total window size will be 2*flanking_size+1, default to 12.}
+\item{flanking_size}{The number of residues surrounding each side of the center residue, The total window size will be 2*flanking_size+1 (default to 12).}
 
-\item{SPIDER}{A boolean variable indicating the usage of SPIDER3 features, default set to TRUE.}
+\item{SPIDER}{A boolean variable indicating whether to use SPIDER3 features (default set to TRUE.)}
 
-\item{positive_info_file}{A text file containing the positive PTM sites info in required format.}
+\item{positive_info_file}{A text file containing the positive PTM sites in the required format.}
 
-\item{known_protein_fasta_file}{A text file containing the proteins sequences of interest and known PTM sites in Fasta format.}
+\item{known_protein_fasta_file}{A text file containing the proteins sequences of interest and known PTM sites in fasta format.}
 
-\item{predict_protein_fasta_file}{A text file containing the proteins sequences with PTM sites to be predicted in Fasta format.}
+\item{predict_protein_fasta_file}{A text file containing the proteins sequences with PTM sites to be predicted in fasta format.}
 
 \item{output_label_training}{The string to tag the output files associated with training proteins.}
 
 \item{output_label_predict}{The string to tag the output files associated with prediction proteins.}
 
-\item{lower_bound}{The lower bound of the scaled data range, default to -1.}
+\item{lower_bound}{The lower bound of the scaled data range (default to -1).}
 
-\item{upper_bound}{The upper bound of the scaled data range, default to 1.}
+\item{upper_bound}{The upper bound of the scaled data range (default to 1).}
 
-\item{liblinear_dir}{Absolute path of Liblinear tool.}
+\item{liblinear_dir}{The path for the Liblinear tool.}
 
-\item{feature_file_path}{Absolute path of the feature files.}
+\item{feature_file_path}{The path for the feature files.}
 
 \item{cvlog_path_name}{The path and name of the log files, which hold the details of Liblinear procedures.}
 
-\item{specificity_level}{A numerical number indicating the specificity user requires the classifier to achieve, default set to 0.99. Used only not in "reference" mode.}
+\item{specificity_level}{A number ranges from 0 to 1 indicating the specificity user requires the classifier to achieve (default to 0.99).}
 
-\item{n_fold}{Number of folds used for training and prediction, default set to 2}
+\item{n_fold}{The number of folds used for training and prediction in cross validation stage (default set to 2).}
 
-\item{flag_for_score_threshold_chosen}{A string indicating whether use reference score threshold or get from the user supplied training data, defalt set to "reference".}
+\item{flag_for_score_threshold_chosen}{A string indicating whether use reference score threshold or get from the user supplied training data (default set to "reference").}
 
-\item{score_threshold}{A numerical value between 0 to 1 indicating the reference score threshold (supply when in "reference")}
+\item{score_threshold}{A numerical value between 0 to 1 indicating the reference score threshold (required in "reference" mode).}
 }
 \description{
 Predict on targeted proteome.
