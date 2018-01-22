@@ -1,7 +1,7 @@
 Package: PTMscape
 Title: What the Package Does (one line, title case)
 Version: 0.0.0.9000
-Authors@R: person(¡°Ginny Xiaohe¡±, "Li¡±, email = ¡°a0123847@u.nus.edu¡±, role = c("aut", "cre"))
+Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
 Description: PTMscape performs PTM prediction and crosstalk analysis.
 Depends: R (>= 3.3.1)
 Imports:

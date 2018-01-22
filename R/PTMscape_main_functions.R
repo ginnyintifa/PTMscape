@@ -996,8 +996,8 @@ get_score_threshold = function(prediction_score_file_names,
   
   cat("at specificity level wanted, score cutoff is: ",
       score_which_spec,"\n")
-  cat("at specificity level wanted, how many sites are predicted? ",
-      length(which(candi_score$pos_score>score_which_spec)), "\n")
+  #cat("at specificity level wanted, how many sites are predicted? ",
+   #   length(which(candi_score$pos_score>score_which_spec)), "\n")
   
   cat("threshold at best MCC ", score_max_mcc, "\n" )
   cat("best MCC", max_mcc,"\n")
