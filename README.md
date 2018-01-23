@@ -61,7 +61,7 @@ For this analysis, the function `predict_on_whole_proteome()` should be called. 
 
 #### Targeted prediction
 
-In this mode of analysis, it is assumed that the user provides a set of reliable PTM sites and a fasta file containing associated protein sequences i.e. yser is confident about the positive/negative designation of PTM sites in these protein sequences). The aim here is to predict PTM events in previously uncharted proteins sequences with model trained from the reliable set. After prediction, the score threshold of positive/negative site will be selected by either refering to the threshold derived from large dataset (provided by `PTMscape` tool, see the chart below) or by conducting cross validation within the reliable data and select the cutoff corresponding to user specified specificity level.  
+In this mode of analysis, it is assumed that the user provides a set of reliable PTM sites and a fasta file containing associated protein sequences i.e. user is confident about the positive/negative designation of PTM sites in these protein sequences). The aim here is to predict PTM events in previously uncharted proteins sequences with model trained from the reliable set. After prediction, the score threshold of positive/negative site will be selected by either referring to the threshold derived from large dataset (provided by `PTMscape` tool, see the chart below) or by conducting cross validation within the reliable data and select the cutoff corresponding to user specified specificity level.  
 
 For this mode of analysis, the function `predict_on_targeted_proteome()` should be called. Input files and parameters are described in the following sections.
 
@@ -192,7 +192,7 @@ Download these files and put them in the same working directory where you instal
 
 ## 6.Example script
 
-### Whole proteom prediction
+### Whole proteome prediction
 Let us assume that we predict lysine acetylation on all proteins provided. A two-fold cross validation will be conducted. Score threshold will be determined at specificity level 0.99. Two text output files will be produced: **ps_samle_wp_mapped_df.tsv** and **ps_sample_wp_test.tsv**.
 
 ```{r, eval=F}
@@ -295,7 +295,7 @@ calculate_tbt_negative_ptms(anchor_mod = "methy_k",
 ## 7.Description of output files.
 
 
-The user can ignore all the `.Rds` files produced by the functions as they are used internally by the functions in this package. After the function finishes the runing process, the following `.tsv` files should be examined:
+The user can ignore all the `.Rds` files produced by the functions as they are used internally by the functions in this package. After the function finishes the running process, the following `.tsv` files should be examined:
 
 
 **output_label_mapped_df.tsv** contains the predicted score for each modifiable site in proteins given.
