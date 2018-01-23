@@ -119,8 +119,7 @@ In the whole proteome scale prediction mode, only one fasta file is required. In
 
 ### PTMscape provided input files
 
-Several files need to be downloaded from the following <p><a href="http://137.132.97.109:59739/CSSB_LAB" target="_blank">website</a></p> 
-before running `PTMscape`:
+Several files need to be downloaded from the following [website](http://137.132.97.109:59739/CSSB_LAB/)before running `PTMscape`:
 
 
 * 1.  Clustered AAindex parameters in **aaindex_cluster_order.tsv**.  
