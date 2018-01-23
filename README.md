@@ -28,16 +28,18 @@ library(PTMscape)
 ```
 
 
-Finally, `PTMscape` requires installation of `Liblinear` library, which can be downloaded from [Liblinear website](https://www.csie.ntu.edu.tw/~cjlin/liblinear/). After installation of `Liblinear`, a small [change](https://www.csie.ntu.edu.tw/~cjlin/liblinear/FAQ.html#training_and_prediction) of source code in the file `linear.cpp` (see below) is required so as to produce probability score for SVM prediction.
+Finally, `PTMscape` requires installation of `Liblinear` library, which can be downloaded from [Liblinear website](https://www.csie.ntu.edu.tw/~cjlin/liblinear/). After downloading and unzipping, a small [change](https://www.csie.ntu.edu.tw/~cjlin/liblinear/FAQ.html#training_and_prediction) of source code in the file `linear.cpp` (see below) is required so as to produce probability score for SVM prediction.
 
 
 ```
 
 int check_probability_model(const struct model *model_)
-
 {
+        return (model_->param.solver_type==L2R_LR ||
+                        model_->param.solver_type==L2R_LR_DUAL ||
+                        model_->param.solver_type==L1R_LR);
+}
 
-	return (model_->param.solver_type==L2R_LR ||
 
 to
 
@@ -46,8 +48,32 @@ int check_probability_model(const struct model *model_)
 {
 
 	return 1;
-	
+}
 ```
+
+After the change is made, compile the files following the instructions below:
+
+```
+On Unix systems, type `make' to build the `train' and `predict'
+programs. Run them without arguments to show the usages.
+
+On other systems, consult `Makefile' to build them (e.g., see
+'Building Windows binaries' in this file) or use the pre-built
+binaries (Windows binaries are in the directory `windows').
+
+This software uses some level-1 BLAS subroutines. The needed functions are
+included in this package.  If a BLAS library is available on your
+machine, you may use it by modifying the Makefile: Unmark the following line
+
+        #LIBS ?= -lblas
+
+and mark
+
+        LIBS ?= blas/blas.a
+
+
+```
+
 Note: we provide a modified version of `linear.cpp` in the repository.
 
 ## 2. Functions
@@ -116,7 +142,7 @@ Download these files and put them in the same working directory where you instal
 
 ```ptm_site```  The target amino acid of the given PTM type, in upper-case single letter representation.  
 ```flanking_size``` The number of residues surrounding each side of the center residue, The total window size will be 2*flanking_size+1 (default to 12).  
-```SPIDER``` A boolean variable indicating whether to use SPIDER3 features (default set to TRUE.)  
+```SPIDER``` A boolean variable indicating whether to use SPIDER3 features (default set to TRUE).  
 ```positive_info_file```  A text file containing the positive PTM sites in the required format.  
 ```protein_fasta_file```  A text file containing the protein sequences of interest in fasta format.  
 ```liblinear_dir``` The path for the Liblinear tool.  
@@ -134,7 +160,7 @@ Download these files and put them in the same working directory where you instal
 
 ```ptm_site```  The target amino acid of the given PTM type, in upper-case single letter representation.  
 ```flanking_size``` The number of residues surrounding each side of the center residue, The total window size will be 2*flanking_size+1 (default to 12).  
-```SPIDER``` A boolean variable indicating whether to use SPIDER3 features (default set to TRUE.)  
+```SPIDER``` A boolean variable indicating whether to use SPIDER3 features (default set to TRUE).  
 ```positive_info_file```  A text file containing the positive PTM sites in the required format.  
 ```protein_fasta_file```  A text file containing the protein sequences of interest in fasta format. 
 ```known_protein_fasta_file```  A text file containing the proteins sequences of interest and known PTM sites in fasta format.  

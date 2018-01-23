@@ -9,8 +9,7 @@ Imports:
 	dplyr,
 	magrittr,
 	caret,
-	stringr,
-	qvalue
+	stringr
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
