@@ -2,7 +2,7 @@
 # Table of contents
 - [Installation](https://github.com/ginnyintifa/PTMscape#1installation)
 - [Functions](https://github.com/ginnyintifa/PTMscape#2-functions)
-- [Input files](https://github.com/ginnyintifa/PTMscape#3input-files)
+- [Input and files](https://github.com/ginnyintifa/PTMscape#3input-files)
 - [Input parameters](https://github.com/ginnyintifa/PTMscape#4input-parameters)
 - [Reference score threshold](https://github.com/ginnyintifa/PTMscape#5reference-score-threshold-derived-from-phosphositeplus-ptm-data)
 - [Example script](https://github.com/ginnyintifa/PTMscape#6example-script)
@@ -104,7 +104,7 @@ Negative crosstalk in a protein domain is defined as two types of PTM occurring 
 The function `calculate_tbt_negative_ptms()` should be called for this analysis. Input files and parameters are described in the following sections.
 
 
-## 3.Input files
+## 3.Input and feature files
 ### User provided input files
 
 * 1. Known PTM sites
@@ -115,7 +115,7 @@ User has to provide the Uniprot accession ID of proteins and position of the PTM
 
 In the whole proteome scale prediction mode, only one fasta file is required. In targeted prediction mode, two fasta files are needed. One consists proteins containing the reliable PTM sites information, and the other consists protein sequences from which PTM sites are to be predicted. See the sample data: **sample_known_fasta.tsv** and **sample_predict_fasta.tsv**.
 
-### PTMscape provided input files
+### PTMscape provided feature files
 
 Several files need to be downloaded from the following [website](http://137.132.97.109:59739/CSSB_LAB/) before running `PTMscape`:
 
