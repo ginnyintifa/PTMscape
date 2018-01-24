@@ -53,26 +53,24 @@ int check_probability_model(const struct model *model_)
 
 After the change is made, compile the files following the instructions below:
 
-```
-On Unix systems, type `make' to build the `train' and `predict'
+>On Unix systems, type `make` to build the `train` and `predict`.
 programs. Run them without arguments to show the usages.
 
-On other systems, consult `Makefile' to build them (e.g., see
+>On other systems, consult `Makefile` to build them (e.g., see
 'Building Windows binaries' in this file) or use the pre-built
 binaries (Windows binaries are in the directory `windows').
 
-This software uses some level-1 BLAS subroutines. The needed functions are
+>This software uses some level-1 BLAS subroutines. The needed functions are
 included in this package.  If a BLAS library is available on your
 machine, you may use it by modifying the Makefile: Unmark the following line
 
         #LIBS ?= -lblas
 
-and mark
+>and mark
 
         LIBS ?= blas/blas.a
 
 
-```
 
 Note: we provide a modified version of `linear.cpp` in the repository.
 
@@ -236,6 +234,19 @@ predict_on_whole_proteome(ptm_site = "S",
                           output_label = "ps_sample_wp")
 
 ```
+
+
+##### Running time needed for serine phosphorylation on whole proteome scale
+
+The program was run on a Linux server with 32 Intel Xeon(R) E4-2630 v3 (2.40GHz) processors and 64Gb memory.
+
+
+
+
+| Total time  | Feature generation | Training/prediction preparation | Liblinear processing| Prediction score annotation | Domain enrichment analysis |
+| ------------- | ------------- | ------------- | ------------- |------------- | ------------- |
+| 39min  | 9min | 17min |4min| 3min | 6min |
+
 
 
 
