@@ -2,7 +2,7 @@
 # Table of contents
 - [Installation](https://github.com/ginnyintifa/PTMscape#1installation)
 - [Functions](https://github.com/ginnyintifa/PTMscape#2-functions)
-- [Input and files](https://github.com/ginnyintifa/PTMscape#3input-files)
+- [Input and feature files](https://github.com/ginnyintifa/PTMscape#3input-and-feature-files)
 - [Input parameters](https://github.com/ginnyintifa/PTMscape#4input-parameters)
 - [Reference score threshold](https://github.com/ginnyintifa/PTMscape#5reference-score-threshold-derived-from-phosphositeplus-ptm-data)
 - [Example script](https://github.com/ginnyintifa/PTMscape#6example-script)
