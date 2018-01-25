@@ -1053,19 +1053,18 @@ assemble_window_score_cv = function(candidate_df_Rds,
                                  positive_score_Rds,
                                  candi_score_Rds,
                                  score_threshold,
+                                 id_convert,
                                  output_label)
   
 {
-  # candidate_df_Rds = "ps_0103_candidate.Rds"
-  # positive_index_file_path = "/data/ginny/test_package/ps_0103_index/positive_index/"
-  # positive_index_file_names = "ps_0103_positive_index_files.txt"
-  # candi_index_file_path = "/data/ginny/test_package/ps_0103_index/candidate_index/"
-  # candi_index_file_names = "ps_0103_candi_index_files.txt"
-  # positive_score_Rds = "ps_0103_positive_score.Rds"
-  # candi_score_Rds = "ps_0103_candi_score.Rds"
+  # candidate_df_Rds = "ps_wp_52_candidate.Rds"
+  # positive_index_file_names = "ps_wp_52_pos_index_names.Rds"
+  # candi_index_file_names = "ps_wp_52_candi_index_names.Rds"
+  # positive_score_Rds = "ps_wp_52_positive_score.Rds"
+  # candi_score_Rds = "ps_wp_52_candi_score.Rds"
   # score_threshold = 0.683
-  # output_label = "ps_0103"
-  # 
+  # output_label = "test_0125"
+
   candidate_df = readRDS(candidate_df_Rds)
   
   ### now get the order correct
@@ -1116,12 +1115,17 @@ assemble_window_score_cv = function(candidate_df_Rds,
   
   rm(positive_df_order_score, candi_df_order_score)
   
+  colnames(id_convert) = c("protID","gene_name")
+  
+  
   df_score_label = df_score %>%
     dplyr::mutate(pred_label = "negative") %>%
     dplyr::mutate(pred_label = replace(pred_label, pred_score >= score_threshold, "positive")) %>%
+    dplyr::mutate(score_label = pred_label) %>%
     dplyr::mutate(pred_label = replace(pred_label, label == "positive", "positive")) %>%
+    dplyr::left_join(id_convert) %>%
     dplyr::arrange(protID, pos) %>%
-    dplyr::select(protID, pos, window, label, pred_score, pred_label)
+    dplyr::select(protID, gene_name, pos, window, pred_score, score_label, label, pred_label)
   
   rm(df_score)
   

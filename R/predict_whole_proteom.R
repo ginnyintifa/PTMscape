@@ -86,8 +86,23 @@ generate_feature_wp = function(ptm_site, flanking_size=12, SPIDER = T,
                                output_label)
     
     
+    ### ok I need to change the file name to flexible for different size scenerio
+    
+    
+    spider_rds_name = "extracted_spider.Rds"
+    if(flanking_size == 7)
+    {
+      spider_rds_name = "extracted_spider_7.Rds"
+    }else if(flanking_size == 5)
+    {
+      spider_rds_name = "extracted_spider_5.Rds"
+    } else
+    {
+      cat("SIZE ERROR!","\n")
+    }
+    
     spider_feature_joining_without_mean(paste0(output_label,"_candidate.Rds"),
-                                        "extracted_spider.Rds",
+                                        spider_rds_name,
                                         c(1,6,8,9),
                                         c(8,9),
                                         flanking_size + 1,  
@@ -384,12 +399,22 @@ present_prediction_wp = function(positive_index_file_names,
   
   cat("score threshold: ", st, "\n")
   
+  
+  uniprot_genename = fread("uniprotID_genename.tsv", header = T, stringsAsFactors = F)
+  
+  
+  ### ok I just changed this function, next step should be change accordingly in the domain 
+  ### analysis part and test the whole proteome prediction and make changes in target and crosstalk 
+  ### try to focus on this 
+  
+  
   assemble_window_score_cv(candidate_df_Rds = candidate_df_Rds,
                            positive_index_file_names = positive_index_file_names,
                            candi_index_file_names = candi_index_file_names,
                            positive_score_Rds = paste0(output_label, "_positive_score.Rds"),
                            candi_score_Rds = paste0(output_label, "_candi_score.Rds"),
                            score_threshold = st,
+                           id_convert = uniprot_genename,
                            output_label = output_label)
   
 }
