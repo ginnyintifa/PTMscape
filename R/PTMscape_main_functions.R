@@ -1147,6 +1147,7 @@ assemble_window_score_cv = function(candidate_df_Rds,
 
 assemble_window_score_target = function(prediction_score_file,
                                         predict_candidate_df_Rds,
+                                        id_convert,
                                         score_threshold,
                                         output_label)
 {
@@ -1179,13 +1180,21 @@ assemble_window_score_target = function(prediction_score_file,
   pred_df = readRDS(predict_candidate_df_Rds)
   
   
+  
+  
+  colnames(id_convert) = c("protID","gene_name")
+  
+  
   pred_df_score_label = pred_df %>%
     dplyr::mutate(pred_score = pred_score_df$pos_score) %>%
     dplyr::mutate(pred_label = "negative") %>%
     dplyr::mutate(pred_label = replace(pred_label, pred_score >= score_threshold, "positive")) %>%
+    dplyr::mutate(score_label = pred_label) %>%
+    dplyr::left_join(id_convert) %>%
     dplyr::arrange(protID, pos) %>%
-    dplyr::select(protID, pos, window, label, pred_score, pred_label)
+    dplyr::select(protID, gene_name, pos, window, pred_score, score_label, label, pred_label)
   
+
   
   write.table(pred_df_score_label,paste0(output_label, "_window_score_df.tsv"), 
               sep = "\t", quote = F, row.names = F)

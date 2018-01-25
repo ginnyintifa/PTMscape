@@ -118,8 +118,25 @@ generate_feature_t = function(ptm_site, flanking_size=12,
                                output_label_training)
     
     
+    
+    if(flanking_size == 12)
+    {
+      spider_rds_name = "extracted_spider.Rds"
+    }
+    else if(flanking_size == 7)
+    {
+      spider_rds_name = "extracted_spider_7.Rds"
+    }else if(flanking_size == 5)
+    {
+      spider_rds_name = "extracted_spider_5.Rds"
+    } else
+    {
+      cat("SIZE ERROR!","\n")
+    }
+    
+    
     spider_feature_joining_without_mean(paste0(output_label_training,"_candidate.Rds"),
-                                        "extracted_spider.Rds",
+                                        spider_rds_name,
                                         c(1,6,8,9),
                                         c(8,9),
                                         flanking_size + 1,  
@@ -160,7 +177,7 @@ generate_feature_t = function(ptm_site, flanking_size=12,
                                output_label_predict)
     
     spider_feature_joining_without_mean(paste0(output_label_predict,"_candidate.Rds"),
-                                        "extracted_spider.Rds",
+                                        spider_rds_name,
                                         c(1,6,8,9),
                                         c(8,9),
                                         flanking_size + 1,  
@@ -497,10 +514,12 @@ present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
                              specificity_level = specificity_level,
                              output_label = paste0(output_label, "_known_cv"))
           
-                                    
+    uniprot_genename = fread("uniprotID_genename.tsv", header = T, stringsAsFactors = F)
+
     assemble_window_score_target(prediction_score_file = pred_score_file_name,
                                  predict_candidate_df_Rds = pred_candidate_df_Rds_name,
                                  score_threshold = st,
+                                 id_convert = uniprot_genename,
                                  output_label = output_label)
     
     
