@@ -123,6 +123,7 @@ Several files need to be downloaded from the following [website](http://137.132.
 * 1.  Clustered AAindex parameters in **aaindex_cluster_order.tsv**.  
 * 2.  Extracted SPIDER3 position specific structural features for the whole eligible Swiss-prot human proteome in **extract_spider.Rds** (this file is applicable when flanking size is set to 12 (window size 25). We also provide **extracted_spider_7.Rds** and **extracted_spider_5.Rds** for window size 15 and 11 respectively).   
 * 3.  **spider_protID.tsv** is needed in the feature extraction step. It contains all the Uniprot accession IDs of proteins, for which SPIDER3 features can be extracted.
+* 4. **uniprotID_genename.tsv** contains mapping between Uniprot accession numbers and gene names.
 * 4.  **domain_df_pure.Rds** contains domain specifications compiled from the `Pfam` tool.  
 * 5.  Subcellular locations of each protein is in the file named **subcellusr_location_df_pure.Rds**, the information is retrieved from the database called `COMPARTMENTS`.
 
