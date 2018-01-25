@@ -89,8 +89,12 @@ generate_feature_wp = function(ptm_site, flanking_size=12, SPIDER = T,
     ### ok I need to change the file name to flexible for different size scenerio
     
     
-    spider_rds_name = "extracted_spider.Rds"
-    if(flanking_size == 7)
+    
+    if(flanking_size == 12)
+    {
+      spider_rds_name = "extracted_spider.Rds"
+    }
+    else if(flanking_size == 7)
     {
       spider_rds_name = "extracted_spider_7.Rds"
     }else if(flanking_size == 5)
