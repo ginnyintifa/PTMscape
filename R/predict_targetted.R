@@ -474,11 +474,17 @@ present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
                                        specificity_level,
                                        output_label)
 {
+  
+  uniprot_genename = fread("uniprotID_genename.tsv", header = T, stringsAsFactors = F)
+  
+  
+  
   if(flag_for_score_threshold_chosen == "reference")
   {
     assemble_window_score_target(prediction_score_file = pred_score_file_name,
                                  predict_candidate_df_Rds = pred_candidate_df_Rds_name,
                                  score_threshold = score_threshold,
+                                 id_convert = uniprot_genename,
                                  output_label = output_label)
     
   }else{
@@ -514,7 +520,6 @@ present_prediction_t = function(flag_for_score_threshold_chosen = "reference",
                              specificity_level = specificity_level,
                              output_label = paste0(output_label, "_known_cv"))
           
-    uniprot_genename = fread("uniprotID_genename.tsv", header = T, stringsAsFactors = F)
 
     assemble_window_score_target(prediction_score_file = pred_score_file_name,
                                  predict_candidate_df_Rds = pred_candidate_df_Rds_name,
