@@ -223,6 +223,7 @@ Let us assume that we predict lysine acetylation on all proteins provided. A two
 
 predict_on_whole_proteome(ptm_site = "S",
                           flanking_size = 12,
+                          SPIDER = T,
                           positive_info_file = "sample_known_ps.tsv",
                           protein_fasta_file = "sample_known_fasta.tsv",
                           n_fold = 2,
