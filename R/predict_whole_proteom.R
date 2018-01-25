@@ -407,10 +407,6 @@ present_prediction_wp = function(positive_index_file_names,
   uniprot_genename = fread("uniprotID_genename.tsv", header = T, stringsAsFactors = F)
   
   
-  ### ok I just changed this function, next step should be change accordingly in the domain 
-  ### analysis part and test the whole proteome prediction and make changes in target and crosstalk 
-  ### try to focus on this 
-  
   
   assemble_window_score_cv(candidate_df_Rds = candidate_df_Rds,
                            positive_index_file_names = positive_index_file_names,
