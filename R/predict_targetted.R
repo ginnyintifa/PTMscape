@@ -661,7 +661,7 @@ predict_on_targeted_proteome = function (ptm_site, flanking_size=12,
   
   
   
-  to_delete_matches = c("feature", "[0-9]", "matrix","match","score","candi",
+  to_delete_matches = c("feature", "[0-9]", "label","model","predict", "matrix","match","score","candi",
                         "pssm","tbt","names")
   
   for(i in 1:length(to_delete_matches))
