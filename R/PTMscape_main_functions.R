@@ -1133,7 +1133,7 @@ assemble_window_score_cv = function(candidate_df_Rds,
   
   
   write.table(df_score_label,paste0(output_label, "_window_score_df.tsv"), 
-              sep = "\t", quote = F, row.names = F)
+              sep = "\t", quote = F, row.names = F, na = "")
   
   saveRDS(df_score_label, file = paste0(output_label, "_window_score_df.Rds"))
   
@@ -1202,7 +1202,7 @@ assemble_window_score_target = function(prediction_score_file,
 
   
   write.table(pred_df_score_label,paste0(output_label, "_window_score_df.tsv"), 
-              sep = "\t", quote = F, row.names = F)
+              sep = "\t", quote = F, row.names = F, na = "")
   
   saveRDS(pred_df_score_label, file = paste0(output_label, "_window_score_df.Rds"))
   
@@ -2003,7 +2003,7 @@ map_domain_subcellular = function(window_score_label_Rds,
   
   saveRDS(info_df, file = paste0(output_label, "_mapped_df.Rds"))
   write.table(info_df, paste0(output_label,"_mapped_df.tsv"),
-              quote =  F, row.names = F, sep = "\t")
+              quote =  F, row.names = F, sep = "\t",na = "")
   
 }
 
