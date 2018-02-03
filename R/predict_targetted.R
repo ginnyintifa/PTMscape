@@ -653,6 +653,39 @@ predict_on_targeted_proteome = function (ptm_site, flanking_size=12,
   PTM_domain_mapping_enrichment(window_score_label_Rds = paste0(output_label_predict,"_window_score_df.Rds"), 
                                 output_label = output_label_predict)
   cat("STEP5: Domain mapped and annotated.", "\n")
+  
+  
+  ### insert code here to remove redundant files 
+  
+  ### keep only _test.tsv and _test.Rds
+  
+  
+  
+  to_delete_matches = c("feature", "[0-9]", "matrix","match","score","candi",
+                        "pssm","tbt","names")
+  
+  for(i in 1:length(to_delete_matches))
+  {
+    
+    match_string = paste0(output_label_training,"_*",to_delete_matches[i],"*")
+    rm_cmd = paste0("find -type f -name '", match_string,  "' -delete")
+    
+    system(rm_cmd)
+    
+    match_string = paste0(output_label_predict,"_*",to_delete_matches[i],"*")
+    rm_cmd = paste0("find -type f -name '", match_string,  "' -delete")
+    
+    system(rm_cmd)
+    
+  
+    
+  }
+  
+  
+  
+  
+  
+  
   cat("Finished!","\n")
 }
           

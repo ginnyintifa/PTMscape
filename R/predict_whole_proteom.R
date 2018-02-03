@@ -517,6 +517,23 @@ predict_on_whole_proteome = function(ptm_site,
                                 output_label = output_label)
 
   cat("STEP5:Domain mapped and annotated.", "\n")
+  
+  to_delete_matches = c("feature", "[0-9]", "matrix","match","score","candi",
+                        "pssm","tbt","names")
+  
+  for(i in 1:length(to_delete_matches))
+  {
+    
+    match_string = paste0(output_label,"_*",to_delete_matches[i],"*")
+    rm_cmd = paste0("find -type f -name '", match_string,  "' -delete")
+    
+    system(rm_cmd)
+
+    
+  }
+  
+  
+  
   cat("Finished!","\n")
 }
 
