@@ -279,6 +279,23 @@ calculate_tbt_positive_ptms = function(distance = 5,
   
   
   
+  
+  
+  
+  to_delete_matches = c("match","tbt")
+  
+  for(i in 1:length(to_delete_matches))
+  {
+    
+    match_string = paste0(output_label,"_*",to_delete_matches[i],"*")
+    rm_cmd = paste0("find -type f -name '", match_string,  "' -delete")
+    
+    system(rm_cmd)
+    
+  }
+  
+  
+  
 }
 
 
@@ -477,6 +494,22 @@ calculate_tbt_negative_ptms = function(anchor_mod,
   
   write.table(tbt_p, paste0(output_label, "_test.tsv"),
               quote = F, row.names = F, sep = "\t")
+  
+  
+  
+  to_delete_matches = c("match","tbt")
+  
+  for(i in 1:length(to_delete_matches))
+  {
+    
+    match_string = paste0(output_label,"_*",to_delete_matches[i],"*")
+    rm_cmd = paste0("find -type f -name '", match_string,  "' -delete")
+    
+    system(rm_cmd)
+    
+  }
+  
+  
   
   
 }
