@@ -117,7 +117,7 @@ In the whole proteome scale prediction mode, only one fasta file is required. In
 
 ### PTMscape provided feature files
 
-Several files need to be downloaded from the following [website](http://137.132.97.109:59739/CSSB_LAB/) before running `PTMscape`:
+Several files need to be downloaded from the following [WEBSITE](http://137.132.97.109:59739/CSSB_LAB/) before running `PTMscape`:
 
 
 * 1.  Clustered AAindex parameters in **aaindex_cluster_order.tsv**.  
@@ -223,19 +223,20 @@ Let us assume that we predict lysine acetylation on all proteins provided. A two
 
 predict_on_whole_proteome(ptm_site = "S",
                           flanking_size = 12,
-                          SPIDER = T,
+                          SPIDER = TRUE,
                           positive_info_file = "sample_known_ps.tsv",
                           protein_fasta_file = "sample_known_fasta.tsv",
                           n_fold = 2,
                           lower_bound = -1,
                           upper_bound = 1,
-                          liblinear_dir = "/data/ginny/Liblinear_prep/",
+                          liblinear_dir = "/data/ginny/liblinear-2.11/",
                           feature_file_path = "/data/ginny/PTMscape_test/",
                           cvlog_path_name = "/data/ginny/PTMscape_test/cvlog.txt",
                           specificity_level = 0.99,
                           output_label = "ps_sample_wp")
 
 ```
+Note: it is important to have "/" appended in the end for the input parameters of `liblinear_dir` and `feature_file_path`.
 
 
 ##### Running time needed for serine phosphorylation on whole proteome scale
@@ -260,7 +261,7 @@ Known phosphoS sites and proteins are used to train a linear SVM model. Select a
 ```{r, eval=F}
 predict_on_targeted_proteome (ptm_site = "S", 
                               flanking_size=12, 
-                              SPIDER = T,
+                              SPIDER = TRUE,
                               positive_info_file = "sample_known_ps.tsv", 
                               known_protein_fasta_file = "sample_known_fasta.tsv",
                               predict_protein_fasta_file = "sample_predict_fasta.tsv",
@@ -268,7 +269,7 @@ predict_on_targeted_proteome (ptm_site = "S",
                               output_label_predict = "ps_sample_predict",
                               lower_bound = -1,
                               upper_bound = 1,
-                              liblinear_dir = "/data/ginny/Liblinear_prep/",
+                              liblinear_dir = "/data/ginny/liblinear-2.11/",
                               feature_file_path = "/data/ginny/PTMscape_test/",
                               cvlog_path_name = "/data/ginny/PTMscape_test/cvlog.txt",
                               specificity_level = 0.99,
@@ -333,7 +334,7 @@ calculate_tbt_negative_ptms(anchor_mod = "methy_k",
 ## 7.Description of output files.
 
 
-The user can ignore all the `.Rds` files produced by the functions as they are used internally by the functions in this package. After the function finishes the running process, the following `.tsv` files should be examined:
+The user can ignore all the `.Rds` files produced by the functions as they are used internally by the functions in this package. Redundant files are removed by the program at the last stage. After the function finishes the running process, the following `.tsv` files should be examined:
 
 
 **output_label_mapped_df.tsv** contains the predicted score for each modifiable site in proteins given.

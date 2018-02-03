@@ -68,11 +68,11 @@ calculate_tbt_positive_ptms = function(distance = 5,
   ### change column names
   
   cn_anchor = colnames(anchor_mapped_df)
-  cn_anchor[which(grepl("pred_label", cn_anchor))] = "anchor_label"
+  cn_anchor[which(grepl("combined_label", cn_anchor))] = "anchor_label"
   colnames(anchor_mapped_df) = cn_anchor
   
   cn_cross = colnames(cross_mapped_df)
-  cn_cross[which(grepl("pred_label", cn_cross))] = "cross_label"
+  cn_cross[which(grepl("combined_label", cn_cross))] = "cross_label"
   colnames(cross_mapped_df) = cn_cross
   
   
@@ -340,11 +340,11 @@ calculate_tbt_negative_ptms = function(anchor_mod,
 
   
   cn_anchor = colnames(anchor_mapped_df)
-  cn_anchor[which(grepl("pred_label", cn_anchor))] = "anchor_label"
+  cn_anchor[which(grepl("combined_label", cn_anchor))] = "anchor_label"
   colnames(anchor_mapped_df) = cn_anchor
   
   cn_cross = colnames(cross_mapped_df)
-  cn_cross[which(grepl("pred_label", cn_cross))] = "cross_label"
+  cn_cross[which(grepl("combined_label", cn_cross))] = "cross_label"
   colnames(cross_mapped_df) = cn_cross
   
   

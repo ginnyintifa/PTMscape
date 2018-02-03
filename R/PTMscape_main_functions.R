@@ -1121,12 +1121,13 @@ assemble_window_score_cv = function(candidate_df_Rds,
   df_score_label = df_score %>%
     dplyr::mutate(pred_label = "negative") %>%
     dplyr::mutate(pred_label = replace(pred_label, pred_score >= score_threshold, "positive")) %>%
-    dplyr::mutate(score_label = pred_label) %>%
-    dplyr::mutate(pred_label = replace(pred_label, label == "positive", "positive")) %>%
+    dplyr::mutate(prediction_label = pred_label) %>%
+    dplyr::mutate(combined_label = replace(pred_label, label == "positive", "positive")) %>%
+    dplyr::mutate(known_label = label)%>%
     dplyr::mutate(threshold = score_threshold)%>%
     dplyr::left_join(id_convert) %>%
     dplyr::arrange(protID, pos) %>%
-    dplyr::select(protID, gene_name, pos, window, pred_score, threshold,score_label, label, pred_label)
+    dplyr::select(protID, gene_name, pos, window, pred_score, threshold,prediction_label, known_label, combined_label)
   
   rm(df_score)
   
@@ -1190,11 +1191,13 @@ assemble_window_score_target = function(prediction_score_file,
     dplyr::mutate(pred_score = pred_score_df$pos_score) %>%
     dplyr::mutate(pred_label = "negative") %>%
     dplyr::mutate(pred_label = replace(pred_label, pred_score >= score_threshold, "positive")) %>%
-    dplyr::mutate(score_label = pred_label) %>%
+    dplyr::mutate(prediction_label = pred_label) %>%
+    dplyr::mutate(combined_label = prediction_label)%>%
+    dplyr::mutate(known_label = label)%>%
     dplyr::mutate(threshold = score_threshold) %>%
     dplyr::left_join(id_convert) %>%
     dplyr::arrange(protID, pos) %>%
-    dplyr::select(protID, gene_name, pos, window, pred_score, threshold, score_label, label, pred_label)
+    dplyr::select(protID, gene_name, pos, window, pred_score, threshold, prediction_label, known_label, combined_label)
   
 
   
@@ -2018,7 +2021,7 @@ calculate_tbt_single_ptm = function(mapped_window_score_label_Rds,
   mapped_window_score_label = readRDS(mapped_window_score_label_Rds)
   
   cn_merge = colnames(mapped_window_score_label)
-  cn_merge[which(grepl("pred_label", cn_merge))] = "anchor_label"
+  cn_merge[which(grepl("combined_label", cn_merge))] = "anchor_label"
   colnames(mapped_window_score_label) = cn_merge
   
   ### recode positive negative to TURE and FALSE
