@@ -2020,6 +2020,12 @@ calculate_tbt_single_ptm = function(mapped_window_score_label_Rds,
   #mapped_window_score_label_Rds = "ps_0103_mapped_df.Rds"
   mapped_window_score_label = readRDS(mapped_window_score_label_Rds)
   
+  
+  
+  colnames(mapped_window_score_label) = c("protID","gene_name","pos","window","pred_score","threshold",
+                                 "prediction_label","known_label","combined_label",
+                                 "domain","subcellular")
+  
   cn_merge = colnames(mapped_window_score_label)
   cn_merge[which(grepl("combined_label", cn_merge))] = "anchor_label"
   colnames(mapped_window_score_label) = cn_merge

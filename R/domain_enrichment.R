@@ -65,7 +65,16 @@ calculate_tbt_positive_ptms = function(distance = 5,
   anchor_mapped_df = readRDS(anchor_mapped_df_Rds)
   cross_mapped_df = readRDS(cross_mapped_df_Rds)
   # 
-  ### change column names
+  ### change column names 
+  
+  colnames(anchor_mapped_df) = c("protID","gene_name","pos","window","pred_score","threshold",
+                                 "prediction_label","known_label","combined_label",
+                                 "domain","subcellular")
+  
+  colnames(cross_mapped_df) = c("protID","gene_name","pos","window","pred_score","threshold",
+                                 "prediction_label","known_label","combined_label",
+                                 "domain","subcellular")
+  
   
   cn_anchor = colnames(anchor_mapped_df)
   cn_anchor[which(grepl("combined_label", cn_anchor))] = "anchor_label"
@@ -338,6 +347,18 @@ calculate_tbt_negative_ptms = function(anchor_mod,
   anchor_mapped_df = readRDS(anchor_mapped_df_Rds)
   cross_mapped_df = readRDS(cross_mapped_df_Rds)
 
+  
+  
+  colnames(anchor_mapped_df) = c("protID","gene_name","pos","window","pred_score","threshold",
+                                 "prediction_label","known_label","combined_label",
+                                 "domain","subcellular")
+  
+  colnames(cross_mapped_df) = c("protID","gene_name","pos","window","pred_score","threshold",
+                                "prediction_label","known_label","combined_label",
+                                "domain","subcellular")
+  
+  
+  
   
   cn_anchor = colnames(anchor_mapped_df)
   cn_anchor[which(grepl("combined_label", cn_anchor))] = "anchor_label"
