@@ -493,6 +493,19 @@ combine_pos_neg = function(pos_feature_matrix_Rds_name, neg_feature_matrix_Rds_n
   ### rbind data 
   
   pos_neg_feature_matrix = rbind(pos_feature_matrix, neg_feature_matrix)
+  
+  
+  
+  col_mean =  colMeans(pos_neg_feature_matrix, na.rm = T)
+  
+  for(i in 1:ncol(pos_neg_feature_matrix))
+  {
+   this_na =  which(is.na(pos_neg_feature_matrix[,i]))
+   pos_neg_feature_matrix[this_na,i] = col_mean[i]
+   
+  }
+  
+  
   saveRDS(pos_neg_feature_matrix, file = paste0(output_label, "_feature_matrix.Rds"))
   
   write.table(pos_neg_feature_matrix, paste0(output_label, "_feature_matrix.tsv"),
