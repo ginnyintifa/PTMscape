@@ -327,6 +327,7 @@ combine_all_features = function(pos_aaindex = NULL,
                                    noc_not_na_candi_structure,
                                    noc_not_na_candi_pssm)
   col_mean =  colMeans(noc_not_na_candi_feature, na.rm = T)
+  cat("Take care of NA","\n")
   
   for(i in 1:ncol(noc_not_na_candi_feature))
   {
