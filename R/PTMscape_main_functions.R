@@ -326,6 +326,16 @@ combine_all_features = function(pos_aaindex = NULL,
   noc_not_na_candi_feature = cbind(noc_not_na_candi_cluster,
                                    noc_not_na_candi_structure,
                                    noc_not_na_candi_pssm)
+  col_mean =  colMeans(noc_not_na_candi_feature, na.rm = T)
+  
+  for(i in 1:ncol(noc_not_na_candi_feature))
+  {
+    this_na =  which(is.na(noc_not_na_candi_feature[,i]))
+    noc_not_na_candi_feature[this_na,i] = col_mean[i]
+    
+  }
+  
+
   saveRDS(noc_not_na_candi_feature, file = paste0(output_label, "_noc_not_na_candi_feature.Rds"))
   rm(noc_not_na_candi_feature)
   
@@ -340,6 +350,16 @@ combine_all_features = function(pos_aaindex = NULL,
     noc_not_na_pos_feature = cbind(noc_not_na_pos_cluster,
                                    noc_not_na_pos_structure,
                                    noc_not_na_pos_pssm)
+     
+    col_mean =  colMeans(noc_not_na_pos_feature, na.rm = T)
+    
+    for(i in 1:ncol(noc_not_na_pos_feature))
+    {
+      this_na =  which(is.na(noc_not_na_pos_feature[,i]))
+      noc_not_na_pos_feature[this_na,i] = col_mean[i]
+      
+    }
+ 
     saveRDS(noc_not_na_pos_feature, file = paste0(output_label, "_noc_not_na_pos_feature.Rds"))
     rm(noc_not_na_pos_feature)
     
@@ -364,6 +384,18 @@ combine_all_features_no_spider = function(pos_aaindex = NULL,
   
   noc_not_na_candi_feature = cbind(noc_not_na_candi_cluster,
                                    noc_not_na_candi_pssm)
+  
+  col_mean =  colMeans(noc_not_na_candi_feature, na.rm = T)
+  
+  for(i in 1:ncol(noc_not_na_candi_feature))
+  {
+    this_na =  which(is.na(noc_not_na_candi_feature[,i]))
+    noc_not_na_candi_feature[this_na,i] = col_mean[i]
+    
+  }
+  
+  
+  
   saveRDS(noc_not_na_candi_feature, file = paste0(output_label, "_noc_not_na_candi_feature.Rds"))
   rm(noc_not_na_candi_feature)
   
@@ -376,6 +408,16 @@ combine_all_features_no_spider = function(pos_aaindex = NULL,
     
     noc_not_na_pos_feature = cbind(noc_not_na_pos_cluster,
                                    noc_not_na_pos_pssm)
+     col_mean =  colMeans(noc_not_na_pos_feature, na.rm = T)
+    
+    for(i in 1:ncol(noc_not_na_pos_feature))
+    {
+      this_na =  which(is.na(noc_not_na_pos_feature[,i]))
+      noc_not_na_pos_feature[this_na,i] = col_mean[i]
+      
+    }
+    
+    
     saveRDS(noc_not_na_pos_feature, file = paste0(output_label, "_noc_not_na_pos_feature.Rds"))
     rm(noc_not_na_pos_feature)
     
