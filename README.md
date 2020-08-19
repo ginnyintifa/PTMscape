@@ -307,7 +307,7 @@ predict_on_targeted_proteome (ptm_site = "S",
 
 ### Crosstalk analysis
 
-Let us assume that we analyze positive crosstalk events between methylationK and phosphorylationS. The output file will be **sample_ps_ubi_positive_test.sv**. 
+Let us assume that we analyze positive crosstalk events between methylationK and phosphorylationS. The output file will be **sample_ps_ubi_positive_test.tsv**. 
 
 
 ```{r, eval = F}
@@ -320,7 +320,7 @@ calculate_tbt_positive_ptms(distance = 5,
                         output_label = "sample_ps_ubi_positive")
 ```
 
-Meanwhile, this time we analyze negative crosstalk events between ubiquitination and methylationK. The output will be **sample_methy_k_ubi_negative.tsv**.
+Meanwhile, this time we analyze negative crosstalk events between ubiquitination and methylationK. The output will be **sample_methy_k_ubi_negative_test.tsv**.
 
 ```{r, eval = F}
 calculate_tbt_negative_ptms(anchor_mod = "methy_k",
